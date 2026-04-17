@@ -3,22 +3,6 @@
 // ============================================================
 const WEBHOOK_URL = 'https://primary-production-f7ad.up.railway.app/webhook/764e3ba2-d92d-4b23-a7de-aa8f9ed1b696';
 
-async function postWebhookLead(name, phone) {
-  const response = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify({ name, phone }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || `Webhook error: ${response.status}`);
-  }
-}
-
 function announceFormStatus(message) {
   const el = document.getElementById('form-status-announcer');
   if (!el) return;
@@ -111,7 +95,23 @@ function initMiniBookingForm() {
   const form = document.getElementById('mini-booking-form');
   if (!form) return;
 
-  const feedbackEl = document.getElementById('mini-form-feedback');
+  const feedback = document.getElementById('mini-form-feedback');
+  const setFeedback = (message, kind) => {
+    if (!feedback) return;
+    feedback.textContent = message;
+    feedback.classList.remove('hidden', 'text-brand', 'text-red-400/90');
+    if (kind === 'success') {
+      feedback.classList.add('text-brand');
+    } else if (kind === 'error') {
+      feedback.classList.add('text-red-400/90');
+    }
+  };
+  const clearFeedback = () => {
+    if (!feedback) return;
+    feedback.textContent = '';
+    feedback.classList.add('hidden');
+    feedback.classList.remove('text-brand', 'text-red-400/90');
+  };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -123,27 +123,26 @@ function initMiniBookingForm() {
     const btnText   = document.getElementById('mini-btn-text');
     const btnLoader = document.getElementById('mini-btn-loader');
 
-    if (feedbackEl) {
-      feedbackEl.classList.add('hidden');
-      feedbackEl.textContent = '';
-      feedbackEl.classList.remove('text-brand', 'text-white/55');
-    }
-
+    clearFeedback();
     btnSubmit.disabled = true;
     btnText.textContent = 'ОТПРАВКА...';
     if (btnLoader) btnLoader.classList.remove('hidden');
 
     try {
-      await postWebhookLead(name, phone);
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || `Webhook error: ${response.status}`);
+      }
 
       btnText.textContent = 'ЗАЯВКА ПРИНЯТА';
+      setFeedback('Спасибо! Заявка принята — администратор свяжется с вами в ближайшее время.', 'success');
       announceFormStatus('Заявка принята. Администратор свяжется с вами в течение 10 минут.');
-      if (feedbackEl) {
-        feedbackEl.textContent =
-          'Спасибо! Заявка отправлена — администратор свяжется с вами в течение 10 минут.';
-        feedbackEl.classList.add('text-brand');
-        feedbackEl.classList.remove('hidden');
-      }
       form.reset();
 
       setTimeout(() => {
@@ -153,12 +152,8 @@ function initMiniBookingForm() {
     } catch (error) {
       console.error('Ошибка отправки мини-формы:', error);
       btnText.textContent = 'ОШИБКА — ПОВТОРИТЕ';
+      setFeedback('Не удалось отправить заявку. Проверьте сеть и попробуйте снова.', 'error');
       announceFormStatus('Ошибка отправки. Проверьте сеть и попробуйте снова.');
-      if (feedbackEl) {
-        feedbackEl.textContent = 'Не удалось отправить. Проверьте сеть и попробуйте снова.';
-        feedbackEl.classList.add('text-white/55');
-        feedbackEl.classList.remove('hidden');
-      }
       setTimeout(() => {
         btnText.textContent = 'Записаться';
       }, 3000);
@@ -527,22 +522,31 @@ function initPriceListTabs() {
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const targetPanel = tab.dataset.tab;
+      const currentPanel = document.querySelector('.price-list__panel--active');
+      const nextPanel    = document.querySelector(`[data-panel="${targetPanel}"]`);
 
+      if (!nextPanel || nextPanel === currentPanel) return;
+
+      // Update tab pills immediately (CSS transition handles the smooth look)
       tabs.forEach(t => {
         t.classList.remove('price-list__tab--active');
         t.setAttribute('aria-selected', 'false');
       });
-      panels.forEach(p => p.classList.remove('price-list__panel--active'));
-
       tab.classList.add('price-list__tab--active');
       tab.setAttribute('aria-selected', 'true');
+      tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
-      const panel = document.querySelector(`[data-panel="${targetPanel}"]`);
-      if (panel) {
-        panel.classList.add('price-list__panel--active');
+      // Fade out old panel, then let it clean up after animation
+      if (currentPanel) {
+        currentPanel.classList.remove('price-list__panel--active');
+        currentPanel.classList.add('price-list__panel--leaving');
+        currentPanel.addEventListener('animationend', () => {
+          currentPanel.classList.remove('price-list__panel--leaving');
+        }, { once: true });
       }
 
-      tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      // Fade in new panel (overlaps briefly for cinematic cross-fade)
+      nextPanel.classList.add('price-list__panel--active');
     });
   });
 }
@@ -691,6 +695,9 @@ function initMasterGallery() {
 
   if (!masterCards.length || !gallery || !galleryTrack) return;
 
+  const mqMobileGalleryOff = window.matchMedia('(max-width: 767px)');
+  const isGalleryDisabledOnThisViewport = () => mqMobileGalleryOff.matches;
+
   // Master portfolio images — update with real photos when available
   const mastersData = {
     alexander: {
@@ -723,6 +730,8 @@ function initMasterGallery() {
   let currentMaster = null;
 
   const openGallery = (masterId) => {
+    if (isGalleryDisabledOnThisViewport()) return;
+
     const master = mastersData[masterId];
     if (!master) return;
 
@@ -780,6 +789,90 @@ function initMasterGallery() {
     if (e.key === 'ArrowRight')  nextSlide();
     if (e.key === 'ArrowLeft')   prevSlide();
   });
+
+  mqMobileGalleryOff.addEventListener('change', () => {
+    if (isGalleryDisabledOnThisViewport() && !gallery.classList.contains('hidden')) {
+      closeGallery();
+    }
+  });
+}
+
+// ============================================================
+// Yandex Maps widget — lazy load (no iframe until user interaction)
+// Reduces third-party cookies and main-thread work on initial load.
+// Optional consent: set data-map-consent-key on #yandex-map-lazy to a
+// localStorage key (truthy value required before the button loads the map).
+// Or from a cookie banner: localStorage.setItem(key, '1') then enable UI.
+// ============================================================
+function initLazyYandexMap() {
+  const root = document.getElementById('yandex-map-lazy');
+  const btn = document.getElementById('yandex-map-load-btn');
+  if (!root || !btn) return;
+
+  const mapUrl = root.getAttribute('data-map-url');
+  const mapTitle = root.getAttribute('data-map-title') || 'Карта';
+  const consentKey = root.getAttribute('data-map-consent-key');
+
+  const consentAllows = () => {
+    if (!consentKey) return true;
+    try {
+      return Boolean(localStorage.getItem(consentKey));
+    } catch {
+      return false;
+    }
+  };
+
+  const injectIframe = () => {
+    if (root.dataset.mapLoaded === '1' || !mapUrl) return;
+    root.dataset.mapLoaded = '1';
+    root.classList.add('map-lazy-root--loaded');
+
+    const iframe = document.createElement('iframe');
+    iframe.src = mapUrl;
+    iframe.title = mapTitle;
+    iframe.className = 'map-iframe';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+    iframe.setAttribute('tabindex', '0');
+    root.appendChild(iframe);
+    btn.remove();
+    requestAnimationFrame(() => {
+      try {
+        iframe.focus();
+      } catch {
+        /* ignore */
+      }
+    });
+  };
+
+  const tryLoad = () => {
+    if (!consentAllows()) return;
+    btn.disabled = true;
+    injectIframe();
+  };
+
+  btn.addEventListener('click', tryLoad);
+
+  const enableBtnIfConsent = () => {
+    if (!consentKey || !btn.isConnected) return;
+    if (!consentAllows()) return;
+    btn.disabled = false;
+    btn.removeAttribute('aria-disabled');
+    btn.removeAttribute('title');
+  };
+
+  window.addEventListener('storage', (e) => {
+    if (consentKey && e.key === consentKey && e.newValue) enableBtnIfConsent();
+  });
+
+  window.addEventListener('faktura-map-consent-updated', enableBtnIfConsent);
+
+  if (consentKey && !consentAllows()) {
+    btn.disabled = true;
+    btn.setAttribute('aria-disabled', 'true');
+    btn.title = 'Сначала примите использование cookies в уведомлении на сайте';
+  }
 }
 
 // ============================================================
@@ -788,6 +881,7 @@ function initMasterGallery() {
 document.addEventListener('DOMContentLoaded', () => {
 
   initBurgerMenu();
+  initLazyYandexMap();
   initMiniBookingForm();
   initQuiz();
   initPriceListTabs();

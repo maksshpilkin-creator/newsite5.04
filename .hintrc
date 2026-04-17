@@ -1,0 +1,29 @@
+{
+  "extends": ["development"],
+  "browserslist": [
+    "defaults",
+    "safari >= 15.4",
+    "ios_saf >= 15.4"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "forced-color-adjust: none",
+          "-webkit-forced-color-adjust: none",
+          "scrollbar-width",
+          "scrollbar-width: none"
+        ]
+      }
+    ],
+    "compat-api/html": [
+      "default",
+      {
+        "ignore": [
+          "video[playsinline]"
+        ]
+      }
+    ]
+  }
+}
