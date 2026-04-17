@@ -38,12 +38,14 @@
 </head>
 
 <body class="bg-graphite text-white font-sans selection:bg-brand selection:text-black concrete-bg">
+  <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+  <div id="form-status-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
   <!-- BEGIN: Navigation -->
   <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center glass-nav border-b border-white/5">
-    <div class="text-xl font-black tracking-tighter">ФАКTURA</div>
+    <div class="text-xl font-black tracking-tighter">ФАКТУРА</div>
 
     <!-- Desktop menu -->
-    <div class="hidden md:flex space-x-12 text-[10px] uppercase tracking-[0.3em] font-medium opacity-70">
+    <div class="hidden md:flex space-x-12 text-[10px] uppercase tracking-[0.3em] font-medium opacity-80">
       <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#about">О нас</a>
       <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#services">Услуги</a>
       <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#masters">Мастера</a>
@@ -51,9 +53,15 @@
       <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#contacts">Контакты</a>
     </div>
 
+    <!-- Desktop phone -->
+    <a href="tel:+78123330000" class="hidden md:inline-flex items-center gap-2 text-[11px] tracking-wider text-white/50 hover:text-brand transition-colors font-medium">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.67 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.57 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.88a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.44 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      +7 (812) 333-00-00
+    </a>
+
     <!-- Desktop CTA -->
     <a class="hidden md:inline-flex items-center justify-center px-8 py-3 bg-brand text-black font-black text-[10px] uppercase tracking-[0.3em] rounded-custom hover:shadow-[0_0_30px_rgba(253,252,240,0.2)] hover:-translate-y-0.5 transition-all"
-      href="#booking">
+      href="#new-guests">
       <span>Записаться онлайн</span>
       <svg class="ml-2" width="12" height="12" viewBox="0 0 24 24" fill="none">
         <path d="M5 12h14M12 5l7 7l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -65,6 +73,7 @@
       id="burger-btn"
       class="burger-btn md:hidden"
       aria-label="Открыть меню"
+      title="Открыть меню"
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
@@ -93,7 +102,7 @@
       </nav>
 
       <!-- CTA -->
-      <a class="mobile-menu__cta bg-brand text-black font-black tracking-[0.3em] py-4 px-6" href="#booking">Записаться онлайн</a>
+      <a class="mobile-menu__cta bg-brand text-black font-black tracking-[0.3em] py-4 px-6" href="#new-guests">Записаться онлайн</a>
 
       <!-- Social links -->
       <div class="mobile-menu__socials">
@@ -104,15 +113,16 @@
     </div>
   </div>
   <!-- END: Navigation -->
+  <main id="main-content" tabindex="-1">
   <!-- BEGIN: HeroSection -->
-  <section class="relative h-screen flex items-center justify-center overflow-hidden bg-matte">
-    <div class="absolute inset-0 z-0 parallax-bg opacity-40 mix-blend-luminosity overflow-hidden">
+  <section class="relative min-h-screen min-h-[100dvh] flex items-center justify-center overflow-hidden bg-matte">
+    <div class="absolute inset-0 z-0 parallax-bg opacity-50 mix-blend-luminosity overflow-hidden">
       <img
         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO5GHWszfatYgaIdnp81XvQFUNzD8YdCaB73VV7ZobC78rLBk0lgL98jggV_dJ94X_6n8LHU3KyMbItZ5t0HlGlmXkQGUDZav-yA4eAc7F0JItAJSIHcCqowx321Ktjgk9xG1AVxLhorRAggkJq4GzqJtCsVkBTJu2ElEsKQ4hHgeckXB6HqIsohxQCGwevmOT4NDfuMdg4UD8x5Oz5n0GfF91sVH1INOJ1WO5kvIZj7uvNF7IAHh1So83h8xS5pAdYXpECQfeZJ4"
         alt=""
         width="1920"
         height="1280"
-        fetchpriority="high"
+        loading="eager"
         decoding="async"
         class="w-full h-full object-cover" />
     </div>
@@ -127,46 +137,88 @@
         <p class="text-sm md:text-base font-light text-white/80 tracking-wide">Топ-стилисты с опытом 7+ лет</p>
       </div>
       <p
-        class="text-[10px] md:text-xs uppercase tracking-[0.6em] opacity-40 mb-16 animate-fade-in animate-fade-in-delay-200">
+        class="text-[10px] md:text-xs uppercase tracking-[0.6em] text-white/55 mb-6 animate-fade-in animate-fade-in-delay-200">
         Премиальная студия в сердце Петербурга</p>
-      <div class="animate-fade-in animate-fade-in-delay-400">
+      <!-- Price anchor -->
+      <p class="text-[11px] md:text-xs text-white/55 mb-10 animate-fade-in animate-fade-in-delay-200 tracking-wider">
+        Стрижки от <span class="text-brand/70">3 100 ₽</span> · Окрашивание от <span class="text-brand/70">5 500 ₽</span> · Брови от <span class="text-brand/70">1 700 ₽</span>
+      </p>
+      <div class="animate-fade-in animate-fade-in-delay-400 flex flex-col sm:flex-row items-center gap-4 justify-center">
         <a class="bg-brand text-black px-14 py-5 text-[11px] font-bold uppercase tracking-[0.2em] hover:shadow-[0_0_30px_rgba(253,252,240,0.3)] transition-all inline-block rounded-custom"
-          href="#booking">
+          href="#new-guests">
           Стать гостем
+        </a>
+        <a href="tel:+78123330000" class="text-white/65 hover:text-brand transition-colors text-[11px] tracking-wider flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.67 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.57 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.88a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.44 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          +7 (812) 333-00-00
         </a>
       </div>
     </div>
   </section>
   <!-- END: HeroSection -->
+
+  <!-- BEGIN: TrustBar -->
+  <div class="bg-graphite border-y border-white/5 py-5 px-8 overflow-x-auto">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center md:justify-between gap-6 text-[10px] uppercase tracking-[0.25em] text-white/50 font-bold whitespace-nowrap">
+      <a href="https://yandex.ru/maps/org/faktura/221109704279/reviews/" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-2 hover:text-brand transition-colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-brand/70"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        4.9 · 120+ отзывов Яндекс
+      </a>
+      <div class="w-px h-4 bg-white/10 hidden md:block"></div>
+      <span class="flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Студия с 2019 года
+      </span>
+      <div class="w-px h-4 bg-white/10 hidden md:block"></div>
+      <span class="flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        500+ гостей
+      </span>
+      <div class="w-px h-4 bg-white/10 hidden md:block"></div>
+      <span class="flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        SEBASTIAN Professional · L'Oréal · KEVIN.MURPHY
+      </span>
+      <div class="w-px h-4 bg-white/10 hidden md:block"></div>
+      <span class="flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Ответ за 10 минут
+      </span>
+    </div>
+  </div>
+  <!-- END: TrustBar -->
+
   <!-- BEGIN: AboutSection -->
   <section class="py-40 px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-24 relative z-10" id="about">
     <div class="md:w-1/2" data-purpose="philosophy-text">
       <span class="text-brand/50 uppercase tracking-[0.4em] text-[10px] mb-8 block font-semibold">— Философия</span>
       <h2 class="text-4xl md:text-5xl font-bold mb-10 leading-[1.1] tracking-tight text-brand reveal-header">Ваш стиль
         как произведение искусства.</h2>
-      <p class="text-white/40 text-lg leading-relaxed mb-8 max-w-md font-light">
+      <p class="text-white/70 text-lg leading-relaxed mb-8 max-w-md font-light">
         Мы не просто стрижем. Мы создаем архитектуру вашего образа, подчеркивая естественную эстетику и внутреннюю
         свободу. Ничего лишнего. Только безупречная форма.
       </p>
       <ul class="space-y-4 mb-10 max-w-md">
-        <li class="flex items-start gap-3 text-white/60 text-sm">
+        <li class="flex items-start gap-3 text-white/70 text-sm">
           <span class="text-brand mt-1">•</span>
-          <span>Работаем с SEBASTIAN Professional, KEVIN.MURPHY, L'Oréal Professionnel</span>
+          Работаем с SEBASTIAN Professional, KEVIN.MURPHY, L'Oréal Professionnel
         </li>
-        <li class="flex items-start gap-3 text-white/60 text-sm">
+        <li class="flex items-start gap-3 text-white/70 text-sm">
           <span class="text-brand mt-1">•</span>
-          <span>Средний чек 4 500 — 8 000 ₽ за комплексную услугу</span>
+          Средний чек 4 500 — 8 000 ₽ за комплексную услугу
         </li>
-        <li class="flex items-start gap-3 text-white/60 text-sm">
+        <li class="flex items-start gap-3 text-white/70 text-sm">
           <span class="text-brand mt-1">•</span>
-          <span>Каждый мастер — дипломированный специалист с международной сертификацией</span>
+          Каждый мастер — дипломированный специалист с международной сертификацией
         </li>
       </ul>
       <div class="h-px w-20 bg-white/10"></div>
     </div>
     <div class="md:w-1/2 relative">
-      <div class="absolute -inset-4 bg-brand/5 blur-3xl rounded-full"></div>
+
       <video id="philosophy-video" muted loop playsinline
+        poster="../photos_inside/XXXL.webp"
         class="relative w-full h-[650px] object-cover grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-1000 rounded-custom shadow-soft">
         <source src="../photos_inside/AQPYj2u7J_JmH5_W8xjeeeJ9NerGheMezryGy5fLFM2L3owj2GkXi4P9uwTJ0WH.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -175,7 +227,7 @@
   </section>
   <!-- END: AboutSection -->
   <!-- BEGIN: MiniBookingSection -->
-  <section class="py-32 bg-graphite relative overflow-hidden" id="mini-booking">
+  <section class="py-32 bg-graphite relative overflow-hidden grid-bg" id="mini-booking">
     <div class="absolute inset-0 opacity-5">
       <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand blur-[150px] rounded-full"></div>
       <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-brand/50 blur-[150px] rounded-full"></div>
@@ -183,29 +235,30 @@
     <div class="max-w-4xl mx-auto px-8 relative z-10">
       <div class="text-center mb-16">
         <h2 class="text-4xl md:text-5xl font-bold mb-6 reveal-header">Быстрая запись</h2>
-        <p class="text-white/40 text-sm font-light max-w-md mx-auto reveal-item">Оставьте контакты — администратор свяжется с вами в течение 10 минут</p>
+        <p class="text-white/70 text-sm font-light max-w-md mx-auto reveal-item">Оставьте контакты — администратор свяжется с вами в течение 10 минут</p>
       </div>
       <form id="mini-booking-form" class="space-y-6 bg-matte p-10 md:p-16 rounded-custom border border-white/5 shadow-soft relative overflow-hidden reveal-item">
         <div class="absolute top-0 left-0 w-full h-1 bg-brand/20"></div>
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <input type="text" id="mini-name" name="name" required
-              class="w-full bg-transparent border-b border-white/10 focus:border-brand p-4 text-xs font-bold tracking-[0.2em] placeholder:text-white/20 uppercase text-white outline-none transition-colors"
+              class="w-full bg-transparent border-b border-white/10 focus:border-brand p-4 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
               placeholder="Ваше имя">
           </div>
           <div>
             <input type="tel" id="mini-phone" name="phone" required
-              class="w-full bg-transparent border-b border-white/10 focus:border-brand p-4 text-xs font-bold tracking-[0.2em] placeholder:text-white/20 uppercase text-white outline-none transition-colors"
+              class="w-full bg-transparent border-b border-white/10 focus:border-brand p-4 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
               placeholder="Телефон">
           </div>
         </div>
-        <button type="submit" id="mini-submit-btn"
+        <button type="submit" id="mini-submit-btn" title="Записаться"
           class="w-full bg-brand text-black py-5 mt-4 uppercase text-[10px] font-black tracking-[0.3em] hover:shadow-[0_10px_30px_rgba(253,252,240,0.15)] hover:-translate-y-1 transition-all rounded-custom flex justify-center items-center gap-3">
           <span id="mini-btn-text">Записаться</span>
           <svg id="mini-btn-loader" class="hidden animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
+        <p id="mini-form-feedback" class="hidden text-center text-[11px] font-medium leading-relaxed mt-3 max-w-md mx-auto" role="status" aria-live="polite"></p>
         <p class="text-[9px] text-center text-white/30 uppercase tracking-widest mt-4">Администратор свяжется в течение 10-15 минут в рабочее время (10:00–22:00)</p>
       </form>
     </div>
@@ -217,68 +270,25 @@
 
       <!-- Заголовок секции -->
       <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-4">
-        <h2 class="text-6xl md:text-8xl font-black tracking-tighter opacity-10 reveal-header">SERVICES</h2>
+        <h2 class="text-6xl md:text-8xl font-black tracking-tighter text-white/20 reveal-header">SERVICES</h2>
         <p class="text-brand/40 uppercase tracking-[0.4em] text-[10px] font-bold">Price List 25/26</p>
       </div>
 
       <!-- Табы (навигация по категориям) -->
-      <div class="price-list__tabs-wrapper mb-20 reveal-item">
+      <div class="price-list__tabs-wrapper mb-16 reveal-item">
         <nav class="price-list__tabs" role="tablist" aria-label="Категории услуг">
-          <button class="price-list__tab price-list__tab--active" role="tab" aria-selected="true" data-tab="brows">Брови
-            и ресницы</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="coloring">Окрашивания</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="makeup">Макияж</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="styling">Стайлинг</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="haircuts">Стрижки</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="care">Уходовые процедуры</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="wedding">Свадебные образы</button>
-          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="lamination">Ламинирование</button>
+          <button class="price-list__tab price-list__tab--active" role="tab" aria-selected="true" data-tab="brows" title="Брови и ресницы">Брови и ресницы</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="coloring" title="Окрашивания">Окрашивания</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="makeup" title="Макияж">Макияж</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="styling" title="Стайлинг">Стайлинг</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="haircuts" title="Стрижки">Стрижки</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="care" title="Уходовые процедуры">Уходовые процедуры</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="wedding" title="Свадебные образы">Свадебные образы</button>
+          <button class="price-list__tab" role="tab" aria-selected="false" data-tab="lamination" title="Ламинирование">Ламинирование</button>
         </nav>
       </div>
 
-      <!-- Мы рекомендуем -->
-      <div class="bg-brand/5 border border-brand/10 rounded-custom p-8 md:p-12 mb-16 reveal-item">
-        <div class="flex items-center gap-3 mb-8">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-brand">
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="text-sm font-bold uppercase tracking-[0.2em] text-brand">Мы рекомендуем</span>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-matte/30 p-6 rounded-custom border border-white/5 hover:border-brand/20 transition-all">
-            <h4 class="text-sm font-bold mb-2">Комплекс "Обновление"</h4>
-            <p class="text-xs text-white/50 mb-3">Стрижка + уход + укладка</p>
-            <p class="text-lg font-bold text-brand mb-3">от 5 500 ₽</p>
-            <p class="text-[10px] text-white/40 mb-2">Длительность: 90 мин</p>
-            <p class="text-[10px] text-white/40 mb-3">Для: всех типов волос</p>
-            <p class="text-[9px] text-brand/80 uppercase tracking-wider">Уход в подарок</p>
-          </div>
-          <div class="bg-matte/30 p-6 rounded-custom border border-white/5 hover:border-brand/20 transition-all">
-            <h4 class="text-sm font-bold mb-2">Полный блонд</h4>
-            <p class="text-xs text-white/50 mb-3">Осветление + тонирование + уход</p>
-            <p class="text-lg font-bold text-brand mb-3">от 12 000 ₽</p>
-            <p class="text-[10px] text-white/40 mb-2">Длительность: 3-4 часа</p>
-            <p class="text-[10px] text-white/40 mb-3">Для: натуральных блондинок</p>
-            <p class="text-[9px] text-brand/80 uppercase tracking-wider">К18 включён</p>
-          </div>
-          <div class="bg-matte/30 p-6 rounded-custom border border-white/5 hover:border-brand/20 transition-all">
-            <h4 class="text-sm font-bold mb-2">Мужской комплекс</h4>
-            <p class="text-xs text-white/50 mb-3">Стрижка + оформление бороды</p>
-            <p class="text-lg font-bold text-brand mb-3">4 500 ₽</p>
-            <p class="text-[10px] text-white/40 mb-2">Длительность: 60 мин</p>
-            <p class="text-[10px] text-white/40 mb-3">Для: мужчин</p>
-            <p class="text-[9px] text-brand/80 uppercase tracking-wider">Напиток в подарок</p>
-          </div>
-          <div class="bg-matte/30 p-6 rounded-custom border border-white/5 hover:border-brand/20 transition-all">
-            <h4 class="text-sm font-bold mb-2">Свадебный набор</h4>
-            <p class="text-xs text-white/50 mb-3">Пробный + основной образ</p>
-            <p class="text-lg font-bold text-brand mb-3">20 000 ₽</p>
-            <p class="text-[10px] text-white/40 mb-2">Длительность: 2 визита</p>
-            <p class="text-[10px] text-white/40 mb-3">Для: невест</p>
-            <p class="text-[9px] text-brand/80 uppercase tracking-wider">Скидка 15%</p>
-          </div>
-        </div>
-      </div>
+
 
       <!-- Контент табов -->
       <div class="price-list__content">
@@ -627,14 +637,15 @@
 
       </div><!-- /.price-list__content -->
 
-      <p class="text-center text-[10px] text-white/20 italic tracking-wider leading-relaxed mt-16">* Точная стоимость
+      <p class="text-center text-[10px] text-white/40 italic tracking-wider leading-relaxed mt-16">* Точная стоимость
         определяется мастером после очной консультации</p>
 
     </div>
   </section>
   <!-- END: ServicesSection -->
   <!-- BEGIN: MastersSection -->
-  <section class="py-40 px-8 max-w-7xl mx-auto" id="masters">
+  <div class="bg-graphite relative grid-bg">
+  <section class="py-40 px-8 max-w-7xl mx-auto relative z-10" id="masters">
     <div class="text-center mb-24">
       <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-4 reveal-header">MASTERS</h2>
       <div class="h-px w-12 bg-brand/30 mx-auto"></div>
@@ -649,15 +660,12 @@
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUMjsDwQ9tFXQIBpR0QK-HRY6jd2hGh6p8h6tAC0WTMfs_IFbwnBwH96vKTZb8TtVwpbmNUYAw_HqgcGGmDdxVDwGyAFOxEkxMtIaMidvl5jsZirtvWOPER8XbkdNbCA6dNCu64qUXwAhzM8l7Ya0SMgbOoxn5m5RGozi1u0-3lpXoIoKtoKE0GrjkhQyt_56fl9GwPduK9bp9tf_I8ZX0kznakjYi2tLd6p5e-G81ECiePYXLpLeouV3kVrSO9u3curz4vYkWut8" />
+            src="../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221237.png" />
         </div>
-        <h3 class="text-xl font-bold tracking-tight mb-2">АЛЕКСАНДР В.</h3>
-        <p class="text-brand/40 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Art Director / Top Stylist</p>
-        <div class="space-y-2 text-white/40">
-          <p class="text-[10px] uppercase tracking-wider">Опыт: 12 лет</p>
-          <p class="text-[10px] uppercase tracking-wider">Специализация: стрижка, цвет, вечерние укладки</p>
-          <p class="text-[10px] uppercase tracking-wider">Обучение: Schwarzkopf Professional Academy</p>
-          <p class="text-[10px] uppercase tracking-wider italic">Работает с fashion-съемками Vogue, Elle</p>
+        <h3 class="text-xl font-bold tracking-tight mb-2">НАТАША ЯКОВЛЕВА</h3>
+        <p class="text-brand/50 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Основатель и арт-директор</p>
+        <div class="space-y-2 text-white/70">
+          <p class="text-[10px] uppercase tracking-wider">В профессии с 2004 года</p>
         </div>
       </div>
       <!-- Master 2 -->
@@ -669,15 +677,12 @@
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmzGdO-A6gXB8M4Q45kC2WErEgyOWjacVjkLiBsfyQlB5HijvmB3iRRznuZyWqGoy0K3fabgFxoWZ2Gv2_6WPPM_ctwT60lo3MBulMIwjObFdYEZgaWF2Wu5u1Q5MVqWQCzXCER-o5xArJvMH8GMqjlC-SwTcovQb4ps6jxKxiXq6GEt6Yv3kTNGfB3cFSq0v9jFGMjXYWeGmLI06uD1G0w6NeqXCrcRXUUa3FSE4hB-tQd7gBrL8jxL8h8WXyFQHvMWVE-bizYwk" />
+            src="../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221257.png" />
         </div>
-        <h3 class="text-xl font-bold tracking-tight mb-2">ЕЛЕНА М.</h3>
-        <p class="text-brand/40 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Senior Colorist</p>
-        <div class="space-y-2 text-white/40">
-          <p class="text-[10px] uppercase tracking-wider">Опыт: 9 лет</p>
-          <p class="text-[10px] uppercase tracking-wider">Специализация: блонд, сложные техники осветления</p>
-          <p class="text-[10px] uppercase tracking-wider">Обучение: L'Oréal Professionnel Academy</p>
-          <p class="text-[10px] uppercase tracking-wider italic">Специалист по блонду без желтизны</p>
+        <h3 class="text-xl font-bold tracking-tight mb-2">САША ЭХОВА</h3>
+        <p class="text-brand/50 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Топ-стилист</p>
+        <div class="space-y-2 text-white/70">
+          <p class="text-[10px] uppercase tracking-wider">В профессии с 2012 года</p>
         </div>
       </div>
       <!-- Master 3 -->
@@ -689,15 +694,12 @@
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnM2AWvm4qNt2k5096dNgP_674MAnQoTAZ3kH2cECMXc54MY3ryDW3OfMLrafb23-1Q7QnQMFRmKoyE2MkWbeUbUsPuUChKSfhSPbGfGCqxL9zVIDqB6YcnP5b3i1-6zZwp3jzWZoF2vERx8du_IiZRoj-BUB0yxphmi-l4b9Qdvb-XAIZnwMbA90xQWoCPoYOjKTfuE4Yu8JrtLfJgIOuTbiKw_7LvDAysLqZ3YsqPEWSJc8V7gzVwYCdgUI0c8kdxltT8qwT3WM" />
+            src="../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221305.png" />
         </div>
-        <h3 class="text-xl font-bold tracking-tight mb-2">МАРК С.</h3>
-        <p class="text-brand/40 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Barber Specialist</p>
-        <div class="space-y-2 text-white/40">
-          <p class="text-[10px] uppercase tracking-wider">Опыт: 7 лет</p>
-          <p class="text-[10px] uppercase tracking-wider">Специализация: мужские стрижки, окантовка, борода</p>
-          <p class="text-[10px] uppercase tracking-wider">Обучение: Babyliss Pro Academy</p>
-          <p class="text-[10px] uppercase tracking-wider italic">Член профессиональной ассоциации барберов</p>
+        <h3 class="text-xl font-bold tracking-tight mb-2">АЛИНА ЛОПУХОВА</h3>
+        <p class="text-brand/50 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Топ-стилист</p>
+        <div class="space-y-2 text-white/70">
+          <p class="text-[10px] uppercase tracking-wider">В профессии с 2018 года</p>
         </div>
       </div>
     </div>
@@ -707,7 +709,7 @@
       <div class="max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-8">
           <h3 class="text-2xl font-bold tracking-tight" id="gallery-master-name">Работы мастера</h3>
-          <button id="close-gallery" class="text-white/40 hover:text-white transition-colors">
+          <button id="close-gallery" type="button" aria-label="Закрыть галерею" title="Закрыть галерею" class="text-white/70 hover:text-white transition-colors">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
             </svg>
@@ -719,12 +721,12 @@
           </div>
         </div>
         <div class="flex justify-center gap-4 mt-6">
-          <button id="gallery-prev" class="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-colors">
+          <button id="gallery-prev" type="button" aria-label="Предыдущая работа" title="Предыдущая работа" class="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <button id="gallery-next" class="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-colors">
+          <button id="gallery-next" type="button" aria-label="Следующая работа" title="Следующая работа" class="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M9 18l6-6l-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -733,6 +735,7 @@
       </div>
     </div>
   </section>
+  </div>
   <!-- END: MastersSection -->
   <!-- BEGIN: QuizSection -->
   <section class="quiz-section py-40 bg-brand text-matte relative overflow-hidden" id="quiz">
@@ -756,7 +759,7 @@
         <!-- Прогресс бар -->
         <div class="quiz-progress mb-10 hidden flex flex-col gap-4" id="quiz-progress-container">
           <div class="flex justify-between items-center">
-            <button id="quiz-btn-prev"
+            <button id="quiz-btn-prev" title="Назад"
               class="quiz-btn-nav invisible text-[10px] uppercase tracking-widest font-bold text-matte/50 hover:text-matte transition-colors flex items-center gap-2">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" class="opacity-70">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -777,25 +780,25 @@
         <div class="quiz-step active" data-step="1">
           <h4 class="text-xl md:text-2xl mb-8 font-medium text-center">Что вас больше всего беспокоит в ваших волосах / образе прямо сейчас?</h4>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-6 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom flex flex-col items-center gap-3 group bg-white/20"
               data-question="pain" data-value="volume">
               <span class="text-sm font-bold uppercase tracking-widest text-matte transition-colors">Нет объема</span>
               <span class="text-[10px] text-matte/50 font-light text-center">Быстро теряет форму</span>
             </button>
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-6 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom flex flex-col items-center gap-3 group bg-white/20"
               data-question="pain" data-value="gray">
               <span class="text-sm font-bold uppercase tracking-widest text-matte transition-colors">Седина</span>
               <span class="text-[10px] text-matte/50 font-light text-center">Нужно перекрасить</span>
             </button>
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-6 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom flex flex-col items-center gap-3 group bg-white/20"
               data-question="pain" data-value="dull">
               <span class="text-sm font-bold uppercase tracking-widest text-matte transition-colors">Тусклый цвет</span>
               <span class="text-[10px] text-matte/50 font-light text-center">Нужен блеск</span>
             </button>
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-6 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom flex flex-col items-center gap-3 group bg-white/20"
               data-question="pain" data-value="other">
               <span class="text-sm font-bold uppercase tracking-widest text-matte transition-colors">Другое</span>
@@ -808,12 +811,12 @@
         <div class="quiz-step" data-step="2">
           <h4 class="text-xl md:text-2xl mb-8 font-medium text-center">Какая длина волос у вас сейчас?</h4>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-8 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom flex flex-col items-center gap-3 group bg-white/20"
               data-question="length" data-value="short">
               <span class="text-sm font-bold uppercase tracking-widest text-matte">Короткие</span>
             </button>
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-8 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom flex flex-col items-center gap-3 group bg-white/20"
               data-question="length" data-value="long">
               <span class="text-sm font-bold uppercase tracking-widest text-matte">Средние / Длинные</span>
@@ -825,14 +828,14 @@
         <div class="quiz-step" data-step="3">
           <h4 class="text-xl md:text-2xl mb-8 font-medium text-center">Что для вас сейчас важнее всего?</h4>
           <div class="grid grid-cols-1 gap-4">
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-5 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom text-left group bg-white/20"
               data-question="priority" data-value="natural">
               <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-matte">Натуральный образ</span>
               <span class="text-[10px] text-matte/50 font-light">Подчеркнуть естественную красоту без видимых
                 усилий</span>
             </button>
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-5 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom text-left group bg-white/20"
               data-question="priority" data-value="expressive">
               <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-matte">Выразительный
@@ -840,7 +843,7 @@
               <span class="text-[10px] text-matte/50 font-light">Обратить на себя внимание и получить
                 WoW-результат</span>
             </button>
-            <button
+            <button title="Выбрать вариант"
               class="quiz-answer py-5 px-6 border border-matte/10 hover:border-matte hover:shadow-soft transition-all rounded-custom text-left group bg-white/20"
               data-question="priority" data-value="easy">
               <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-matte">Легкость в укладке</span>
@@ -862,11 +865,11 @@
                 placeholder="ВАШЕ ИМЯ">
             </div>
             <div class="relative">
-              <input type="email" id="quiz-email" name="email" required
+              <input type="tel" id="quiz-phone" name="phone" required
                 class="w-full bg-transparent border-b border-matte/20 focus:border-matte p-4 text-xs font-bold tracking-widest placeholder:text-matte/30 uppercase text-matte outline-none transition-colors"
-                placeholder="ВАШ E-MAIL">
+                placeholder="ВАШ ТЕЛЕФОН">
             </div>
-            <button type="submit" id="quiz-submit-btn"
+            <button type="submit" id="quiz-submit-btn" title="Получить рекомендацию"
               class="w-full bg-matte text-white py-5 mt-4 uppercase text-[10px] font-black tracking-[0.3em] hover:shadow-[0_10px_30px_rgba(18,18,18,0.15)] hover:-translate-y-1 transition-all rounded-custom flex justify-center items-center gap-3">
               <span id="quiz-btn-text">Получить рекомендацию</span>
               <svg id="quiz-btn-loader" class="hidden animate-spin" width="14" height="14" viewBox="0 0 24 24"
@@ -909,20 +912,12 @@
             </div>
           </div>
 
-          <form id="quiz-booking-form" class="space-y-4 max-w-sm mx-auto mb-6">
-            <input type="text" id="quiz-booking-name" name="name" required
-              class="w-full bg-transparent border-b border-matte/20 focus:border-matte p-3 text-xs font-bold tracking-[0.2em] placeholder:text-matte/40 uppercase text-matte outline-none transition-colors"
-              placeholder="Ваше имя">
-            <input type="tel" id="quiz-booking-phone" name="phone" required
-              class="w-full bg-transparent border-b border-matte/20 focus:border-matte p-3 text-xs font-bold tracking-[0.2em] placeholder:text-matte/40 uppercase text-matte outline-none transition-colors"
-              placeholder="Телефон">
-            <input type="hidden" id="quiz-booking-service" name="service" value="">
-            <input type="hidden" id="quiz-booking-master" name="master" value="">
-            <button type="submit"
+          <div class="max-w-sm mx-auto mb-6">
+            <a href="#new-guests"
               class="w-full bg-matte text-white py-4 mt-4 uppercase text-[10px] font-black tracking-[0.3em] hover:shadow-[0_10px_30px_rgba(18,18,18,0.15)] hover:-translate-y-1 transition-all rounded-custom flex justify-center items-center gap-3">
               <span>Записаться на услугу</span>
-            </button>
-          </form>
+            </a>
+          </div>
 
           <p class="text-matte/60 font-light text-xs md:text-sm max-w-sm mx-auto leading-relaxed">Оставьте контакты — администратор свяжется с вами в течение 10 минут. <br><br> <span
               class="text-[10px] text-matte/40 uppercase tracking-widest">Если сообщение не приходит, проверьте папку
@@ -934,7 +929,10 @@
   </section>
   <!-- END: QuizSection -->
   <!-- BEGIN: CalculatorSection -->
-  <section class="py-40 bg-graphite relative">
+  <section class="py-40 bg-matte relative overflow-hidden grid-bg">
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand blur-[200px] rounded-full"></div>
+    </div>
     <div class="max-w-5xl mx-auto px-8">
       <div class="text-center mb-20">
         <h2 class="text-3xl font-bold uppercase tracking-[0.2em] mb-6 reveal-header">Калькулятор услуг</h2>
@@ -944,7 +942,7 @@
         <!-- Left Vertical Label -->
         <div class="absolute -left-16 hidden lg:block">
           <span
-            class="text-[9px] uppercase tracking-[0.8em] text-white/20 font-bold whitespace-nowrap block origin-center -rotate-90 select-none">
+            class="text-[9px] uppercase tracking-[0.8em] text-white/40 font-bold whitespace-nowrap block origin-center -rotate-90 select-none">
             ESTIMATE
           </span>
         </div>
@@ -954,7 +952,7 @@
           <div class="p-12 space-y-10" id="calc-form">
             <div>
               <label class="block text-[9px] uppercase tracking-[0.4em] mb-4 text-white/30 font-bold" for="calc-service">Тип услуги</label>
-              <select
+              <select title="Тип услуги" aria-label="Тип услуги"
                 class="salon-native-select w-full p-4 rounded-custom text-sm transition-all focus:ring-1 focus:ring-black/10"
                 id="calc-service" onchange="updateCalcUI()">
                 <!-- Опции генерируются в JS -->
@@ -962,7 +960,7 @@
             </div>
             <div id="calc-master-wrapper" class="hidden">
               <label class="block text-[9px] uppercase tracking-[0.4em] mb-4 text-white/30 font-bold" for="calc-master">Уровень мастера</label>
-              <select
+              <select title="Уровень мастера" aria-label="Уровень мастера"
                 class="salon-native-select w-full p-4 rounded-custom text-sm transition-all focus:ring-1 focus:ring-black/10"
                 id="calc-master" onchange="calculatePrice()">
                 <!-- Опции генерируются в JS -->
@@ -978,29 +976,29 @@
           <div class="flex flex-col justify-center items-center bg-graphite/30 p-12 border-l border-white/5">
             <p class="text-[9px] uppercase tracking-[0.4em] text-white/30 mb-4 font-bold">Предварительная стоимость</p>
             <div class="text-6xl font-black text-brand mb-6 tracking-tighter" id="calc-result">5 000 ₽</div>
-            <p class="text-center text-[10px] text-white/20 italic tracking-wider leading-relaxed mb-8">*Точная стоимость
+            <p class="text-center text-[10px] text-white/40 italic tracking-wider leading-relaxed mb-8">*Точная стоимость
               определяется мастером после очной консультации</p>
             
             <form id="calc-contact-form" class="w-full space-y-4 max-w-xs">
               <input type="text" id="calc-name" name="name" required
-                class="w-full bg-transparent border-b border-white/10 focus:border-brand p-3 text-xs font-bold tracking-[0.2em] placeholder:text-white/20 uppercase text-white outline-none transition-colors"
+                class="w-full bg-transparent border-b border-white/10 focus:border-brand p-3 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
                 placeholder="Ваше имя">
               <input type="tel" id="calc-phone" name="phone" required
-                class="w-full bg-transparent border-b border-white/10 focus:border-brand p-3 text-xs font-bold tracking-[0.2em] placeholder:text-white/20 uppercase text-white outline-none transition-colors"
+                class="w-full bg-transparent border-b border-white/10 focus:border-brand p-3 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
                 placeholder="Телефон">
               <input type="hidden" id="calc-services" name="services" value="">
-              <button type="submit"
+              <button type="submit" title="Зафиксировать цену"
                 class="w-full bg-brand text-black py-4 mt-4 uppercase text-[10px] font-black tracking-[0.3em] hover:shadow-[0_10px_30px_rgba(253,252,240,0.15)] hover:-translate-y-1 transition-all rounded-custom flex justify-center items-center gap-3">
                 <span>Зафиксировать цену</span>
               </button>
             </form>
-            <p class="text-[8px] text-center text-white/20 uppercase tracking-widest mt-4">Администратор свяжется в течение 15 минут</p>
+            <p class="text-[8px] text-center text-white/40 uppercase tracking-widest mt-4">Администратор свяжется в течение 15 минут</p>
           </div>
         </div>
         <!-- Right Vertical Label -->
         <div class="absolute -right-16 hidden lg:block">
           <span
-            class="text-[9px] uppercase tracking-[0.8em] text-white/20 font-bold whitespace-nowrap block origin-center rotate-90 select-none">
+            class="text-[9px] uppercase tracking-[0.8em] text-white/40 font-bold whitespace-nowrap block origin-center rotate-90 select-none">
             TRANSPARENCY
           </span>
         </div>
@@ -1009,16 +1007,16 @@
   </section>
   <!-- END: CalculatorSection -->
   <!-- BEGIN: GallerySection -->
-  <section class="pt-12 pb-40 px-4 bg-graphite">
+  <section class="pt-0 pb-40 px-4 bg-graphite">
     <!-- Section Label -->
-    <div class="max-w-[1600px] mx-auto px-4 mb-16 text-center md:text-left">
+    <div class="max-w-[1600px] mx-auto px-4 mb-10 pt-16 text-center md:text-left">
       <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter text-brand/30 reveal-header">ИНТЕРЬЕР</h2>
       <div class="h-px w-12 bg-brand/20 mt-4 hidden md:block"></div>
       <p class="text-white/40 text-xs uppercase tracking-widest mt-6 max-w-md reveal-item">Пространство создано для погружения в атмосферу спокойствия и премиального сервиса</p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-[1600px] mx-auto">
-      <div class="masonry-item overflow-hidden h-[450px] rounded-custom bg-matte reveal-item group">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-[1600px] mx-auto md:pt-24">
+      <div class="masonry-item relative overflow-hidden h-[450px] rounded-custom bg-matte reveal-item group">
         <img class="gallery-img w-full h-full object-cover"
           src="../photos_inside/XXXL.webp" alt="Интерьер салона" width="1024" height="1280" loading="lazy"
           decoding="async" />
@@ -1027,7 +1025,7 @@
         </div>
       </div>
       <div
-        class="masonry-item overflow-hidden h-[650px] md:-mt-20 rounded-custom bg-matte shadow-soft reveal-item reveal-item-delay-100 group">
+        class="masonry-item relative overflow-hidden h-[650px] md:-mt-20 rounded-custom bg-matte shadow-soft reveal-item reveal-item-delay-100 group">
         <img class="gallery-img w-full h-full object-cover"
           src="../photos_inside/XXXL (1).webp" alt="Интерьер салона" width="960" height="1280" loading="lazy"
           decoding="async" />
@@ -1035,7 +1033,7 @@
           <p class="text-[10px] uppercase tracking-widest text-white/90">Рабочие зоны мастеров</p>
         </div>
       </div>
-      <div class="masonry-item overflow-hidden h-[500px] rounded-custom bg-matte reveal-item reveal-item-delay-200 group">
+      <div class="masonry-item relative overflow-hidden h-[500px] rounded-custom bg-matte reveal-item reveal-item-delay-200 group">
         <img class="gallery-img w-full h-full object-cover"
           src="../photos_inside/XXXL (2).webp" alt="Интерьер салона" width="1024" height="1280" loading="lazy"
           decoding="async" />
@@ -1044,7 +1042,7 @@
         </div>
       </div>
       <div
-        class="masonry-item overflow-hidden h-[600px] md:-mt-10 rounded-custom bg-matte reveal-item reveal-item-delay-300 group">
+        class="masonry-item relative overflow-hidden h-[600px] md:-mt-10 rounded-custom bg-matte reveal-item reveal-item-delay-300 group">
         <img class="gallery-img w-full h-full object-cover"
           src="../photos_inside/XXXL (3).webp" alt="Интерьер салона" width="1024" height="1280" loading="lazy"
           decoding="async" />
@@ -1057,7 +1055,7 @@
   <!-- END: GallerySection -->
 
   <!-- BEGIN: ReviewsSection -->
-  <section class="py-40 bg-matte relative overflow-hidden" id="reviews">
+  <section class="py-40 bg-matte relative overflow-hidden grid-bg" id="reviews">
     <div class="absolute inset-0 opacity-5">
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand blur-[200px] rounded-full"></div>
     </div>
@@ -1066,104 +1064,114 @@
         <span class="text-brand/50 uppercase tracking-[0.4em] text-[10px] mb-6 block font-semibold reveal-header">— Отзывы</span>
         <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-white reveal-header">Что говорят гости</h2>
       </div>
+      <!-- Review source badge component -->
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-graphite p-10 rounded-custom border border-white/5 reveal-item group hover:border-brand/20 transition-colors">
-          <div class="flex items-center gap-2 mb-6">
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
+
+        <!-- Review 1 -->
+        <div class="bg-graphite p-10 rounded-custom border border-white/5 reveal-item group hover:border-brand/20 transition-colors flex flex-col">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <span class="text-[9px] uppercase tracking-widest text-white/20 flex items-center gap-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-[#FC3F1D]"><path d="M11.5 0C5.2 0 0 5.2 0 11.5S5.2 23 11.5 23 23 17.8 23 11.5 17.8 0 11.5 0zm.7 17.5H10v-7h2.2v7zm-1.1-8.1c-.7 0-1.2-.5-1.2-1.2s.5-1.2 1.2-1.2 1.2.5 1.2 1.2-.5 1.2-1.2 1.2z"/></svg>
+              Яндекс
+            </span>
           </div>
-          <p class="text-white/70 text-sm leading-relaxed mb-8">"Александр творит чудеса! Впервые мне так точно подобрали цвет и форму. Приходила с желтым оттенком — ушла с идеальным холодным блондом."</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center">
-              <span class="text-brand font-bold">А</span>
+          <p class="text-white/70 text-sm leading-relaxed mb-auto">"Наташа — просто волшебник! Никогда не думала, что мои волосы могут выглядеть так — объём держится уже третий день. Впервые за годы нашла своего мастера."</p>
+          <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center shrink-0">
+                <span class="text-brand font-bold text-sm">А</span>
+              </div>
+              <div>
+                <p class="text-white font-semibold text-sm">Анна К.</p>
+                <p class="text-white/40 text-[10px] uppercase tracking-widest">Стрижка + Укладка</p>
+              </div>
             </div>
-            <div>
-              <p class="text-white font-bold text-sm">Анна К.</p>
-              <p class="text-white/40 text-[10px] uppercase tracking-widest">Окрашивание</p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-graphite p-10 rounded-custom border border-white/5 reveal-item reveal-item-delay-100 group hover:border-brand/20 transition-colors">
-          <div class="flex items-center gap-2 mb-6">
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          </div>
-          <p class="text-white/70 text-sm leading-relaxed mb-8">"Интерьер просто космос! Очень атмосферное место, чувствуешь себя как в спа. А мастеру Марку отдельное спасибо за идеальную бороду."</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center">
-              <span class="text-brand font-bold">Д</span>
-            </div>
-            <div>
-              <p class="text-white font-bold text-sm">Дмитрий М.</p>
-              <p class="text-white/40 text-[10px] uppercase tracking-widest">Мужской зал</p>
-            </div>
+            <span class="text-white/20 text-[10px]">март 2026</span>
           </div>
         </div>
-        <div class="bg-graphite p-10 rounded-custom border border-white/5 reveal-item reveal-item-delay-200 group hover:border-brand/20 transition-colors">
-          <div class="flex items-center gap-2 mb-6">
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <svg class="w-5 h-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
+
+        <!-- Review 2 -->
+        <div class="bg-graphite p-10 rounded-custom border border-white/5 reveal-item reveal-item-delay-100 group hover:border-brand/20 transition-colors flex flex-col">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <span class="text-[9px] uppercase tracking-widest text-white/20 flex items-center gap-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-[#FC3F1D]"><path d="M11.5 0C5.2 0 0 5.2 0 11.5S5.2 23 11.5 23 23 17.8 23 11.5 17.8 0 11.5 0zm.7 17.5H10v-7h2.2v7zm-1.1-8.1c-.7 0-1.2-.5-1.2-1.2s.5-1.2 1.2-1.2 1.2.5 1.2 1.2-.5 1.2-1.2 1.2z"/></svg>
+              Яндекс
+            </span>
           </div>
-          <p class="text-white/70 text-sm leading-relaxed mb-8">"Елена — настоящий маг блонда! Перешла к ней из другого салона и больше никогда не уйду. Цены адекватные, качество топ."</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center">
-              <span class="text-brand font-bold">М</span>
+          <p class="text-white/70 text-sm leading-relaxed mb-auto">"Саша сделала то, что я просила уже три года, но никто не решался. Воздушный блонд из тёмно-коричневого за один визит — без рыжины и повреждений. Это просто магия."</p>
+          <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center shrink-0">
+                <span class="text-brand font-bold text-sm">М</span>
+              </div>
+              <div>
+                <p class="text-white font-semibold text-sm">Мария В.</p>
+                <p class="text-white/40 text-[10px] uppercase tracking-widest">Сложное окрашивание</p>
+              </div>
             </div>
-            <div>
-              <p class="text-white font-bold text-sm">Мария В.</p>
-              <p class="text-white/40 text-[10px] uppercase tracking-widest">Блонд</p>
-            </div>
+            <span class="text-white/20 text-[10px]">февр. 2026</span>
           </div>
         </div>
+
+        <!-- Review 3 -->
+        <div class="bg-graphite p-10 rounded-custom border border-white/5 reveal-item reveal-item-delay-200 group hover:border-brand/20 transition-colors flex flex-col">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <span class="text-[9px] uppercase tracking-widest text-white/20 flex items-center gap-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-[#FC3F1D]"><path d="M11.5 0C5.2 0 0 5.2 0 11.5S5.2 23 11.5 23 23 17.8 23 11.5 17.8 0 11.5 0zm.7 17.5H10v-7h2.2v7zm-1.1-8.1c-.7 0-1.2-.5-1.2-1.2s.5-1.2 1.2-1.2 1.2.5 1.2 1.2-.5 1.2-1.2 1.2z"/></svg>
+              Яндекс
+            </span>
+          </div>
+          <p class="text-white/70 text-sm leading-relaxed mb-auto">"Брови у Алины — отдельный вид искусства. Пришла с «ничем», вышла с лицом. Архитектура + ламинирование в один день, результат держится больше месяца."</p>
+          <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center shrink-0">
+                <span class="text-brand font-bold text-sm">Е</span>
+              </div>
+              <div>
+                <p class="text-white font-semibold text-sm">Екатерина Л.</p>
+                <p class="text-white/40 text-[10px] uppercase tracking-widest">Брови + Ламинирование</p>
+              </div>
+            </div>
+            <span class="text-white/20 text-[10px]">янв. 2026</span>
+          </div>
+        </div>
+
+      </div>
+      <!-- Reviews link -->
+      <div class="text-center mt-12 reveal-item">
+        <a href="https://yandex.ru/maps/org/faktura/221109704279/reviews/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-brand transition-colors border border-white/10 hover:border-brand/30 px-6 py-3 rounded-custom">
+          Все отзывы на Яндекс
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
   </section>
   <!-- END: ReviewsSection -->
 
   <!-- BEGIN: FAQSection -->
-  <section class="py-40 bg-matte relative overflow-hidden" id="faq">
-    <div class="absolute inset-0 opacity-5">
-      <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-brand blur-[200px] rounded-full"></div>
-    </div>
+  <section class="py-40 relative overflow-hidden" id="faq">
     <div class="max-w-4xl mx-auto px-8 relative z-10">
       <div class="text-center mb-20">
         <span class="text-brand/50 uppercase tracking-[0.4em] text-[10px] mb-6 block font-semibold reveal-header">— Частые вопросы</span>
@@ -1171,69 +1179,69 @@
       </div>
       <div class="space-y-4">
         <div class="faq-item bg-graphite rounded-custom border border-white/5 overflow-hidden reveal-item">
-          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20">
+          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20" title="Развернуть ответ">
             <span class="text-white font-bold text-sm tracking-wide">Нужна ли предварительная консультация?</span>
             <svg class="faq-icon w-5 h-5 text-brand transition-transform duration-300" viewBox="0 0 24 24" fill="none">
               <path d="M6 9l6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-content hidden px-8 pb-6">
-            <p class="text-white/60 text-sm leading-relaxed">Для окрашивания и сложных процедур рекомендуем предварительную консультацию. Это позволит мастеру оценить состояние волос и точно рассчитать стоимость. Консультация бесплатна при последующей записи.</p>
+            <p class="text-white/70 text-sm leading-relaxed">Для окрашивания и сложных процедур рекомендуем предварительную консультацию. Это позволит мастеру оценить состояние волос и точно рассчитать стоимость. Консультация бесплатна при последующей записи.</p>
           </div>
         </div>
         <div class="faq-item bg-graphite rounded-custom border border-white/5 overflow-hidden reveal-item reveal-item-delay-100">
-          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20">
+          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20" title="Развернуть ответ">
             <span class="text-white font-bold text-sm tracking-wide">Сколько длится первое окрашивание?</span>
             <svg class="faq-icon w-5 h-5 text-brand transition-transform duration-300" viewBox="0 0 24 24" fill="none">
               <path d="M6 9l6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-content hidden px-8 pb-6">
-            <p class="text-white/60 text-sm leading-relaxed">Первое окрашивание длится от 3 до 4 часов, включая консультацию, диагностику волос, подготовку, саму процедуру и финишный уход. Мы не торопим процесс — качество для нас приоритет.</p>
+            <p class="text-white/70 text-sm leading-relaxed">Первое окрашивание длится от 3 до 4 часов, включая консультацию, диагностику волос, подготовку, саму процедуру и финишный уход. Мы не торопим процесс — качество для нас приоритет.</p>
           </div>
         </div>
         <div class="faq-item bg-graphite rounded-custom border border-white/5 overflow-hidden reveal-item reveal-item-delay-200">
-          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20">
+          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20" title="Развернуть ответ">
             <span class="text-white font-bold text-sm tracking-wide">Есть ли скидки для новых гостей?</span>
             <svg class="faq-icon w-5 h-5 text-brand transition-transform duration-300" viewBox="0 0 24 24" fill="none">
               <path d="M6 9l6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-content hidden px-8 pb-6">
-            <p class="text-white/60 text-sm leading-relaxed">Да! Первое посещение со скидкой 15% на любую услугу. Также у нас действует программа лояльности: за каждые 5 процедур получаете бесплатный уход.</p>
+            <p class="text-white/70 text-sm leading-relaxed">Да! Первое посещение со скидкой 15% на любую услугу. Также у нас действует программа лояльности: за каждые 5 процедур получаете бесплатный уход.</p>
           </div>
         </div>
         <div class="faq-item bg-graphite rounded-custom border border-white/5 overflow-hidden reveal-item">
-          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20">
+          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20" title="Развернуть ответ">
             <span class="text-white font-bold text-sm tracking-wide">Можно ли перенести или отменить запись?</span>
             <svg class="faq-icon w-5 h-5 text-brand transition-transform duration-300" viewBox="0 0 24 24" fill="none">
               <path d="M6 9l6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-content hidden px-8 pb-6">
-            <p class="text-white/60 text-sm leading-relaxed">Бесплатная отмена или перенос записи — за 24 часа до визита. При отмене менее чем за 24 часа взимается 50% от стоимости услуги. Мы ценим время наших мастеров.</p>
+            <p class="text-white/70 text-sm leading-relaxed">Бесплатная отмена или перенос записи — за 24 часа до визита. При отмене менее чем за 24 часа взимается 50% от стоимости услуги. Мы ценим время наших мастеров.</p>
           </div>
         </div>
         <div class="faq-item bg-graphite rounded-custom border border-white/5 overflow-hidden reveal-item reveal-item-delay-100">
-          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20">
+          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20" title="Развернуть ответ">
             <span class="text-white font-bold text-sm tracking-wide">Какие средства используете для окрашивания?</span>
             <svg class="faq-icon w-5 h-5 text-brand transition-transform duration-300" viewBox="0 0 24 24" fill="none">
               <path d="M6 9l6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-content hidden px-8 pb-6">
-            <p class="text-white/60 text-sm leading-relaxed">Работаем с профессиональной продукцией Schwarzkopf Professional, L'Oréal Professionnel и Wella Professionals. Все средства сертифицированы и безопасны для здоровья волос.</p>
+            <p class="text-white/70 text-sm leading-relaxed">Работаем с профессиональной продукцией Schwarzkopf Professional, L'Oréal Professionnel и Wella Professionals. Все средства сертифицированы и безопасны для здоровья волос.</p>
           </div>
         </div>
         <div class="faq-item bg-graphite rounded-custom border border-white/5 overflow-hidden reveal-item reveal-item-delay-200">
-          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20">
+          <button class="faq-trigger w-full px-8 py-6 flex items-center justify-between text-left transition-colors hover:border-brand/20" title="Развернуть ответ">
             <span class="text-white font-bold text-sm tracking-wide">Есть ли услуги для мужского ухода?</span>
             <svg class="faq-icon w-5 h-5 text-brand transition-transform duration-300" viewBox="0 0 24 24" fill="none">
               <path d="M6 9l6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-content hidden px-8 pb-6">
-            <p class="text-white/60 text-sm leading-relaxed">Конечно! У нас отдельный мужской зал с мастером-барбером. Стрижки, окантовка, уход за бородой, камуфляж седины. Комфортная атмосфера без лишнего шума.</p>
+            <p class="text-white/70 text-sm leading-relaxed">Конечно! У нас отдельный мужской зал с мастером-барбером. Стрижки, окантовка, уход за бородой, камуфляж седины. Комфортная атмосфера без лишнего шума.</p>
           </div>
         </div>
       </div>
@@ -1243,7 +1251,7 @@
 
   <!-- BEGIN: NewGuestsSection -->
   <section class="py-40 bg-brand relative overflow-hidden" id="new-guests">
-    <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 opacity-[0.15]">
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-black blur-[200px] rounded-full"></div>
     </div>
     <div class="max-w-7xl mx-auto px-8 relative z-10">
@@ -1276,20 +1284,20 @@
           <div class="absolute top-0 left-0 w-full h-1 bg-black/20"></div>
           <div class="text-center mb-6">
             <p class="text-2xl font-bold text-brand mb-2">Забронируйте скидку</p>
-            <p class="text-xs text-white/40 uppercase tracking-widest">Оставьте контакты для записи</p>
+            <p class="text-xs text-white/65 uppercase tracking-widest">Оставьте контакты для записи</p>
           </div>
           <div>
             <input id="newguest-name" name="name" required
-              class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/10 uppercase text-white outline-none"
+              class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none"
               placeholder="ИМЯ" type="text" />
           </div>
           <div>
             <input id="newguest-phone" name="phone" required
-              class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/10 uppercase text-white outline-none"
+              class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none"
               placeholder="ТЕЛЕФОН" type="tel" />
           </div>
           <div>
-            <select id="newguest-service" name="service" required aria-label="Выбор услуги"
+            <select id="newguest-service" name="service" required aria-label="Выбор услуги" title="Выбор услуги"
               class="salon-native-select w-full rounded-custom p-4 text-[11px] font-bold tracking-[0.2em] uppercase focus:ring-1 focus:ring-black/10">
               <option value="">ВЫБРАТЬ УСЛУГУ</option>
               <option value="Стрижка">Стрижка</option>
@@ -1298,7 +1306,30 @@
               <option value="Уход">Уход</option>
             </select>
           </div>
-          <button type="submit"
+          <div>
+            <label class="text-[9px] uppercase tracking-widest text-white/40 font-bold mb-3 block">Предпочитаемое время</label>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <select id="newguest-time-part" name="time_part" required aria-label="Выберите время дня" title="Время дня"
+                  class="salon-native-select w-full rounded-custom p-4 text-[11px] font-bold tracking-[0.2em] uppercase focus:ring-1 focus:ring-black/10">
+                  <option value="">ВРЕМЯ ДНЯ</option>
+                  <option value="morning">Утро</option>
+                  <option value="afternoon">День</option>
+                  <option value="evening">Вечер</option>
+                </select>
+              </div>
+              <div>
+                <select id="newguest-day" name="day" required aria-label="Выберите день недели" title="День недели"
+                  class="salon-native-select w-full rounded-custom p-4 text-[11px] font-bold tracking-[0.2em] uppercase focus:ring-1 focus:ring-black/10">
+                  <option value="">ДЕНЬ НЕДЕЛИ</option>
+                  <option value="weekday">Будни</option>
+                  <option value="weekend">Выходные</option>
+                  <option value="any">Любой</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button type="submit" title="Получить скидку"
             class="w-full py-4 bg-brand text-black font-black text-[10px] uppercase tracking-[0.3em] rounded-custom hover:shadow-[0_0_30px_rgba(253,252,240,0.3)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
             <span>Получить скидку</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -1314,92 +1345,6 @@
   </section>
   <!-- END: NewGuestsSection -->
 
-  <!-- BEGIN: BookingSection -->
-  <section class="py-40 bg-graphite border-t border-white/5" id="booking">
-    <div class="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-24 items-center">
-      <div>
-        <h2 class="text-7xl md:text-9xl font-black mb-12 leading-none tracking-tighter text-brand/10 reveal-header">
-          GET<br />LOOK</h2>
-        <p class="text-xl font-light max-w-sm mb-12 text-white/60 reveal-item">Оставьте контакты, и наш администратор
-          свяжется с вами для подбора времени.</p>
-        <div class="space-y-6">
-          <div class="flex items-center gap-6 reveal-item reveal-item-delay-100">
-            <span class="w-16 h-px bg-brand/20"></span>
-            <span class="text-xs uppercase tracking-[0.3em] font-medium opacity-80">наб. реки Карповки, 31к1</span>
-          </div>
-          <div class="flex items-center gap-6 reveal-item reveal-item-delay-200">
-            <span class="w-16 h-px bg-brand/20"></span>
-            <span class="text-xs uppercase tracking-[0.3em] font-medium opacity-80">+7 (900) 626-22-88</span>
-          </div>
-        </div>
-      </div>
-      <form id="booking-form"
-        class="space-y-8 bg-matte p-14 rounded-custom border border-white/5 shadow-soft relative overflow-hidden reveal-item">
-        <div class="absolute top-0 left-0 w-full h-1 bg-brand/20"></div>
-
-        <!-- Social Proof -->
-        <div class="text-center mb-8 pb-8 border-b border-white/5">
-          <p class="text-2xl font-bold text-brand mb-2">1 200+ гостей в 2024</p>
-          <p class="text-xs text-white/40 uppercase tracking-widest">95% возвращаются по рекомендации</p>
-        </div>
-
-        <div>
-          <input id="booking-name" name="name" required
-            class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/10 uppercase text-white outline-none"
-            placeholder="ИМЯ" type="text" />
-        </div>
-        <div>
-          <input id="booking-phone" name="phone" required
-            class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/10 uppercase text-white outline-none"
-            placeholder="ТЕЛЕФОН" type="tel" />
-        </div>
-        <div>
-          <select id="booking-service" name="service" required aria-label="Выбор услуги"
-            class="salon-native-select w-full rounded-custom p-4 text-[11px] font-bold tracking-[0.2em] uppercase focus:ring-1 focus:ring-black/10">
-            <option value="">ВЫБРАТЬ УСЛУГУ</option>
-            <option value="Стрижка">Стрижка</option>
-            <option value="Окрашивание">Окрашивание</option>
-            <option value="Комплекс">Комплекс</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-[9px] uppercase tracking-widest text-white/40 font-bold mb-3 block">Предпочитаемое время</label>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <select id="booking-time-part" name="time_part"
-                class="salon-native-select w-full rounded-custom p-4 text-[11px] font-bold tracking-[0.2em] uppercase focus:ring-1 focus:ring-black/10">
-                <option value="">ВРЕМЯ ДНЯ</option>
-                <option value="morning">Утро</option>
-                <option value="afternoon">День</option>
-                <option value="evening">Вечер</option>
-              </select>
-            </div>
-            <div>
-              <select id="booking-day" name="day"
-                class="salon-native-select w-full rounded-custom p-4 text-[11px] font-bold tracking-[0.2em] uppercase focus:ring-1 focus:ring-black/10">
-                <option value="">ДЕНЬ НЕДЕЛИ</option>
-                <option value="weekday">Будни</option>
-                <option value="weekend">Выходные</option>
-                <option value="any">Любой</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <button id="booking-submit-btn" type="submit"
-          class="w-full bg-brand text-black py-6 mt-10 uppercase text-[11px] font-black tracking-[0.4em] hover:shadow-[0_0_40px_rgba(253,252,240,0.2)] transition-all rounded-custom flex justify-center items-center gap-3">
-          <span id="booking-btn-text">Отправить запрос</span>
-          <svg id="booking-btn-loader" class="hidden animate-spin text-black" width="16" height="16" viewBox="0 0 24 24"
-            fill="none">
-            <path
-              d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </button>
-        <p class="text-[9px] text-center text-white/30 uppercase tracking-widest mt-4">Администратор свяжется в течение 10-15 минут в рабочее время (10:00–22:00)</p>
-      </form>
-    </div>
-  </section>
-  <!-- END: BookingSection -->
   <!-- BEGIN: ContactsSection -->
   <footer class="py-24 bg-matte border-t border-white/5" id="contacts">
     <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-16">
@@ -1421,19 +1366,31 @@
           title="Карта: салон Фактура, наб. реки Карповки"
           src="https://yandex.ru/map-widget/v1/?ll=30.306136%2C59.969887&z=16.28&mode=search&oid=221109704279&ol=biz"
           width="100%" height="100%" class="map-iframe"
-          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          allowfullscreen="" loading="lazy">
         </iframe>
       </div>
     </div>
     <div
-      class="max-w-7xl mx-auto px-8 mt-24 pt-10 border-t border-white/5 text-[9px] text-white/10 uppercase tracking-[0.5em] flex flex-col md:flex-row justify-between gap-4">
-      <span>© 2024 FAKTURA SALON. ALL RIGHTS RESERVED.</span>
+      class="max-w-7xl mx-auto px-8 mt-24 pt-10 border-t border-white/5 text-[9px] text-white/30 uppercase tracking-[0.5em] flex flex-col md:flex-row justify-between gap-4">
+      <span>© <span id="footer-year">2026</span> FAKTURA SALON. ALL RIGHTS RESERVED.</span>
       <span>SANKT-PETERSBURG / RUSSIA</span>
       <!-- Author credit -->
-      <a href="https://t.me/devbymax" target="_blank" rel="noopener noreferrer" class="text-white/5 hover:text-white/20 transition-colors" aria-label="Design & Dev by max">@devbymax</a>
+      <a href="https://t.me/devbymax" target="_blank" rel="noopener noreferrer" class="text-white/30 hover:text-white/50 transition-colors" aria-label="Design & Dev by max">@devbymax</a>
     </div>
   </footer>
   <!-- END: ContactsSection -->
+  </main>
+  <!-- BEGIN: FloatingCTA -->
+  <a href="https://t.me/factura_hair" target="_blank" rel="noopener noreferrer"
+     aria-label="Написать в Telegram"
+     title="Написать в Telegram"
+     class="floating-tg-btn">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.94z"/>
+    </svg>
+  </a>
+  <!-- END: FloatingCTA -->
+
   <!-- BEGIN: InteractiveScripts -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
   <script src="script.js" defer></script>

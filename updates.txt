@@ -1,0 +1,304 @@
+# Comprehensive Design Review of "FAKTURA" Website
+## Beauty Studio Saint Petersburg
+
+---
+
+## Executive Summary
+
+The "FAKTURA" website demonstrates a thoughtful design with premium aesthetics befitting the positioning of a beauty studio. Both strengths and areas for improvement have been identified. Below is a detailed analysis of key design aspects.
+
+---
+
+## 1. Visual Hierarchy
+
+### Strengths:
+- **Clear section separation** using distinct color schemes (graphite/matte/brand)
+- **Effective use of typography** to create hierarchy (massive hero section headings, neat subheadings)
+- **Proper use of spacing** between sections (py-40) for visual breathing room
+
+### Areas for Improvement:
+- **Excessive use of opacity-10** in section headings (e.g., "SERVICES" opacity-10) reduces readability and creates visual noise
+- **Inconsistent hierarchy** in price-list: prices are highlighted as prominently as service names, which is disorienting
+- **Lack of visual accents** on key conversion elements (CTA buttons don't stand out enough)
+
+### Recommendations:
+1. Increase contrast of background headings to opacity-20-30
+2. Make service names more prominent than prices (increase font-weight to 600-700)
+3. Add additional visual accent for CTA buttons (e.g., thin border or glow)
+
+---
+
+## 2. Color Scheme and Consistency
+
+### Strengths:
+- **Cohesive color palette**:
+  - `brand: #fdfcf0` (soft warm light/champagne)
+  - `graphite: #1a1a1a` (deep graphite)
+  - `matte: #121212` (matte black)
+- **No mixing of warm and cool gray tones**
+- **Intelligent use of gradients** to create depth
+
+### Areas for Improvement:
+- **Insufficient contrast ratio** for text with opacity-40 on dark backgrounds (WCAG AA requires minimum 4.5:1)
+- **Informative colors not used** for feedback (success/error/warning)
+- **Lack of hover states with color differentiation** for all interactive elements
+
+### Recommendations:
+1. Increase opacity for main text to minimum 60-70%
+2. Add state colors: success (greenish tint), error (reddish tint)
+3. Create unified design system for all hover states
+
+---
+
+## 3. Typography and Readability
+
+### Strengths:
+- **Use of Inter** - modern, readable font
+- **Variety of weights** (300, 400, 700, 900) for creating hierarchy
+- **Proper use of letter-spacing** for uppercase text
+
+### Areas for Improvement:
+- **Inter font is too common** and doesn't create unique brand character
+- **Lack of Medium (500) and SemiBold (600) weights**, limiting fine hierarchy
+- **Using only one font** for entire site (no heading/body pair)
+- **Excessive use of uppercase** (tracking-[0.2em]-[0.6em]) can be fatiguing
+- **Line width not limited** for long text (recommended ~65 characters)
+
+### Recommendations:
+1. Consider replacing with more characterful font (e.g., `Geist`, `Outfit`, or `Cabinet Grotesk`)
+2. Add Medium and SemiBold weights for finer hierarchy
+3. Consider font pair: serif for headings, sans-serif for body
+4. Use sentence case instead of uppercase for long text
+5. Add `max-width: 65ch` for paragraphs
+
+---
+
+## 4. Spacing and Layout Balance
+
+### Strengths:
+- **Consistent vertical spacing system** (py-40 for main sections)
+- **Use of CSS Grid** for complex layouts (price-list, gallery)
+- **Responsive spacing** for mobile devices
+
+### Areas for Improvement:
+- **Inconsistent horizontal spacing**: sometimes px-8, sometimes px-4
+- **Lack of container max-width** for wide screens (content stretches)
+- **Symmetric spacing** (py-40) creates predictability, could add asymmetry
+- **Buttons in cards not aligned to bottom**, creating visual gap
+
+### Recommendations:
+1. Set unified container max-width (1200-1440px) with auto margins
+2. Create consistent horizontal spacing system
+3. Add asymmetry in some sections for visual interest
+4. Use flexbox with `margin-top: auto` to align buttons to bottom of cards
+
+---
+
+## 5. Navigation and Usability
+
+### Strengths:
+- **Fixed navigation** always available
+- **Clear separation** into desktop and mobile versions
+- **Good mobile menu implementation** with animation and focus trap
+- **Smooth scroll** for anchor links
+
+### Areas for Improvement:
+- **No current page indicator** in navigation (active state only on hover) — *note: repo may implement scroll-spy + `.is-active`; verify in `faktura-salon/script.js` / `style.css`*
+- **Mobile menu closes on link click**, but no action confirmation
+- **Quiz**: back navigation and progress bar exist (`#quiz-btn-prev`, `#quiz-progress-container` in `faktura-salon/index.html`); optional UX polish only
+- **No skip-to-content link** for keyboard users
+
+### Recommendations:
+1. Add `.is-active` class for current section in navigation (or verify existing IntersectionObserver)
+2. Show brief indication (e.g., tooltip) when menu closes
+3. Refine quiz step UX if needed (back control already present)
+4. Add hidden skip-link at top of page
+
+---
+
+## 6. Mobile Responsiveness
+
+### Strengths:
+- **Responsive breakpoints** (md:, lg:) for adaptation
+- **Mobile-first approach** in some components
+- **Horizontal scroll for tabs** on mobile devices
+- **Touch-friendly sizes** for buttons and interactive elements
+
+### Areas for Improvement:
+- **Using height: 100vh** in hero section causes issues on iOS Safari (viewport bug)
+- **Some sections not optimized** for very small screens (<375px)
+- **Lack of landscape orientation** for complex forms
+- **Gallery lacks horizontal scroll** on mobile devices
+
+### Recommendations:
+1. Replace `h-screen` with `min-h-screen` or `min-h-100dvh`
+2. Add media queries for screens <375px
+3. Consider adapting forms for landscape orientation
+4. Add horizontal scroll for gallery on mobile
+
+---
+
+## 7. Accessibility Compliance
+
+### Strengths:
+- **Use of semantic HTML** (nav, section, article, button)
+- **ARIA attributes** for interactive elements (aria-expanded, aria-selected, role)
+- **Focus trap** in mobile menu
+- **Keyboard navigation** supported
+
+### Areas for Improvement:
+- **Lack of alt text** for decorative images (some have empty alt="")
+- **Insufficient color contrast** for text with low opacity
+- **No skip-to-content link**
+- **Lack of loading, empty, and error states** for forms
+- **Focus ring** not always visible on all elements
+- **No screen reader notifications** for dynamic content
+
+### Recommendations:
+1. Add descriptive alt text for all meaningful images
+2. Increase contrast to WCAG AA (4.5:1)
+3. Add skip-link at top of page
+4. Create loading states for all forms
+5. Improve focus ring visibility on all interactive elements
+6. Add ARIA live regions for dynamic content
+
+---
+
+## 8. Overall User Experience (UX Flow)
+
+### Strengths:
+- **Logical page structure** (Hero → About → Booking → Services → Quiz → Calculator → Gallery → Reviews → FAQ → Contacts)
+- **Multiple conversion entry points** (quiz, calculator, booking forms)
+- **Smooth animations** to enhance perception
+- **Good video handling** (hover effects, autoplay)
+
+### Areas for Improvement:
+- **No breadcrumbs** for understanding current position
+- **Lack of confirmation messages** after successful form submissions (button text changes help sighted users; screen readers need `aria-live` / status region)
+- **No editing capability** in multi-step forms (quiz)
+- **Network errors**: `console.error` plus some button-label feedback; not always announced to assistive tech
+- **No visual progress indication** in long sections
+
+### Recommendations:
+1. Add breadcrumbs or progress indicator
+2. Create inline confirmation messages after successful submission + **ARIA live region** for form status
+3. Add ability to edit answers in quiz
+4. User-visible errors + **retry** + announced status (not only `console.error`)
+5. Add scroll progress indicator
+
+---
+
+## Prioritized List of Design Improvement Recommendations
+
+### 🔴 High Priority (Critical)
+
+1. **Improve Text Contrast**
+   - Audit all low-contrast tokens site-wide: `opacity-40` / `opacity-10`, `text-white/40`–`/60`, `text-matte/40`, etc. (not a single line — e.g. hero ~116–141, section labels, FAQ body text)
+   - Verify WCAG AA (4.5:1) with a contrast checker on **graphite / matte / brand** backgrounds
+   - Files: [faktura-salon/index.html](faktura-salon/index.html), [faktura-salon/style.css](faktura-salon/style.css)
+
+2. **Replace h-screen with min-h-[100dvh] (and fallback)**
+   - Fix iOS Safari dynamic viewport issues
+   - Files: [faktura-salon/index.html](faktura-salon/index.html) — hero `<section>` (~line 115)
+
+3. **Add skip-to-content link**
+   - Improve accessibility for keyboard users
+   - Add to beginning of `<body>`, target `#main-content`
+
+4. **Improve Focus States**
+   - Visible `:focus-visible` on interactive elements inside main content
+   - Files: [faktura-salon/style.css](faktura-salon/style.css)
+
+### 🟡 Medium Priority (Important)
+
+5. **Consider Font Replacement**
+   - Inter → Geist/Outfit/Cabinet Grotesk for uniqueness
+   - Add Medium and SemiBold weights
+   - Files: [faktura-salon/index.html](faktura-salon/index.html) (Google Fonts / `tailwind.config` in page head)
+
+6. **Add Container Max-Width**
+   - Prevent stretching on wide screens
+   - Reconcile with existing `max-w-7xl mx-auto` wrappers before adding a second `.container` system
+
+7. **Improve Hierarchy in Price-List**
+   - Make service names more prominent than prices
+   - Files: [faktura-salon/style.css](faktura-salon/style.css) (`.price-list__name`, `.price-list__price`)
+
+8. **Add Confirmation Messages**
+   - Inline / button feedback + **`role="status"` / `aria-live="polite"`** for webhook forms
+   - Files: [faktura-salon/script.js](faktura-salon/script.js), [faktura-salon/index.html](faktura-salon/index.html)
+
+### 🟢 Low Priority (Desirable)
+
+9. **Add Asymmetry to Layout**
+   - Break symmetry for visual interest
+   - Use offset margins or mixed aspect ratios
+
+10. **Improve Hover States**
+    - Add color differentiation for all interactive elements
+    - Files: [faktura-salon/style.css](faktura-salon/style.css)
+
+11. **Add Scroll Progress Indicator**
+    - Visual indication of scroll progress
+    - Improve UX for long pages
+
+12. **Consider Font Pair**
+    - Serif for headings, sans-serif for body
+    - Create more premium look
+
+---
+
+## Specific Optimization Proposals
+
+### Color Palette:
+```css
+/* Current */
+brand: '#fdfcf0'
+graphite: '#1a1a1a'
+matte: '#121212'
+
+/* Recommended additions */
+success: '#4ade80'   /* For successful operations */
+error: '#f87171'     /* For errors */
+warning: '#fbbf24'   /* For warnings */
+```
+
+### Typography Scale:
+```css
+/* Add weights */
+font-weight: 500; /* Medium */
+font-weight: 600; /* SemiBold */
+
+/* Limit line width */
+p { max-width: 65ch; }
+
+/* Improve letter-spacing */
+h1 { letter-spacing: -0.02em; } /* Negative for large headings */
+label { letter-spacing: 0.15em; } /* Positive for labels */
+```
+
+### Spacing:
+```css
+/* Unified max-width container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Asymmetry in spacing */
+section { padding-top: 10rem; padding-bottom: 12rem; }
+```
+
+---
+
+## Conclusion
+
+The "FAKTURA" website demonstrates a high level of design with thoughtful architecture and premium aesthetics. Key strengths include a cohesive color palette, smooth animations, and logical structure.
+
+Key areas for improvement focus on:
+1. Accessibility (contrast, focus states)
+2. Typography (uniqueness, hierarchy)
+3. UX flow (confirmation messages, error handling)
+
+Implementing high-priority recommendations will significantly improve user experience and web standards compliance without breaking existing functionality and design.

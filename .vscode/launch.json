@@ -9,6 +9,12 @@
             "request": "launch",
             "name": "Open index.html",
             "file": "c:\\projects_sites\\site_stich_1803\\faktura-salon\\index.html"
+        },
+        {
+            "type": "chrome",
+            "name": "http://127.0.0.1:3000/faktura-salon/index.html",
+            "request": "launch",
+            "url": "http://127.0.0.1:3000/faktura-salon/index.html"
         }
     ]
 }
