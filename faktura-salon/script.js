@@ -3,6 +3,9 @@
 // ============================================================
 const WEBHOOK_URL = 'https://primary-production-f7ad.up.railway.app/webhook/764e3ba2-d92d-4b23-a7de-aa8f9ed1b696';
 
+// Shared Lenis instance — assigned in DOMContentLoaded, used by service booking buttons
+let lenis;
+
 function announceFormStatus(message) {
   const el = document.getElementById('form-status-announcer');
   if (!el) return;
@@ -10,6 +13,19 @@ function announceFormStatus(message) {
   requestAnimationFrame(() => {
     el.textContent = message;
   });
+}
+
+/** RU mobile: 10 digits starting with 9 after optional +7 / 7 / 8 prefix. Returns digits only or null. */
+function normalizeRussianMobile(input) {
+  const d = String(input).replace(/\D/g, '');
+  let rest = d;
+  if (rest.length === 11 && (rest[0] === '7' || rest[0] === '8')) rest = rest.slice(1);
+  if (rest.length === 10 && rest[0] === '9') return rest;
+  return null;
+}
+
+function formatRussianMobileE164(digits10) {
+  return '+7' + digits10;
 }
 
 // ============================================================
@@ -119,6 +135,13 @@ function initMiniBookingForm() {
     const name  = document.getElementById('mini-name').value.trim();
     const phone = document.getElementById('mini-phone').value.trim();
 
+    const phoneDigits = normalizeRussianMobile(phone);
+    if (!phoneDigits) {
+      setFeedback('Укажите корректный мобильный номер — например +7 912 345-67-89.', 'error');
+      announceFormStatus('Некорректный номер телефона.');
+      return;
+    }
+
     const btnSubmit = form.querySelector('button[type="submit"]');
     const btnText   = document.getElementById('mini-btn-text');
     const btnLoader = document.getElementById('mini-btn-loader');
@@ -132,7 +155,7 @@ function initMiniBookingForm() {
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone })
+        body: JSON.stringify({ name, phone: formatRussianMobileE164(phoneDigits) })
       });
 
       if (!response.ok) {
@@ -176,6 +199,11 @@ function initCalcContactForm() {
 
     const name    = document.getElementById('calc-name').value.trim();
     const phone   = document.getElementById('calc-phone').value.trim();
+    const phoneDigits = normalizeRussianMobile(phone);
+    if (!phoneDigits) {
+      announceFormStatus('Укажите корректный мобильный номер.');
+      return;
+    }
     const service = document.getElementById('calc-service')
       ? document.getElementById('calc-service').options[document.getElementById('calc-service').selectedIndex].text
       : '';
@@ -193,7 +221,7 @@ function initCalcContactForm() {
       const payload = new URLSearchParams({
         source: 'calculator',
         name,
-        phone,
+        phone: formatRussianMobileE164(phoneDigits),
         service,
         estimated_price: price
       });
@@ -251,6 +279,23 @@ function initQuiz() {
   const totalSteps = 4;
   let currentStep = 1;
 
+  const stepQuestionKeys = { 1: 'pain', 2: 'length', 3: 'priority' };
+
+  const restoreAnswerStylesForStep = (stepNum) => {
+    const q = stepQuestionKeys[stepNum];
+    if (!q || answers[q] == null) return;
+    const stepEl = document.querySelector(`.quiz-step[data-step="${stepNum}"]`);
+    if (!stepEl) return;
+    const selected = stepEl.querySelector(`.quiz-answer[data-value="${answers[q]}"]`);
+    if (!selected) return;
+    stepEl.querySelectorAll('.quiz-answer').forEach((b) => {
+      b.style.borderColor = 'rgba(18,18,18,0.1)';
+      b.style.backgroundColor = 'rgba(255,255,255,0.2)';
+    });
+    selected.style.borderColor = '#121212';
+    selected.style.backgroundColor = 'transparent';
+  };
+
   const updateUI = () => {
     if (currentStep >= 1 && currentStep <= totalSteps) {
       progressContainer.classList.remove('hidden');
@@ -276,6 +321,10 @@ function initQuiz() {
         step.style.animation = null;
       }
     });
+
+    if (currentStep >= 1 && currentStep <= 3) {
+      restoreAnswerStylesForStep(currentStep);
+    }
   };
 
   const answerBtns = document.querySelectorAll('.quiz-answer');
@@ -348,8 +397,14 @@ function initQuiz() {
     leadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      answers.name  = document.getElementById('quiz-name').value;
-      answers.phone = document.getElementById('quiz-phone').value;
+      answers.name = document.getElementById('quiz-name').value.trim();
+      const rawPhone = document.getElementById('quiz-phone').value.trim();
+      const phoneDigits = normalizeRussianMobile(rawPhone);
+      if (!phoneDigits) {
+        announceFormStatus('Укажите корректный мобильный номер.');
+        return;
+      }
+      answers.phone = formatRussianMobileE164(phoneDigits);
 
       const submitBtn = document.getElementById('quiz-submit-btn');
       const btnText   = document.getElementById('quiz-btn-text');
@@ -428,126 +483,216 @@ const PRICES_DATA = {
 
 function initCalculator() {
   const serviceSelect   = document.getElementById('calc-service');
-  const masterSelect    = document.getElementById('calc-master');
+  const masterSelectEl  = document.getElementById('calc-master');
   const lengthContainer = document.getElementById('calc-length-container');
 
-  if (!serviceSelect || !masterSelect || !lengthContainer) return;
+  if (!serviceSelect || !masterSelectEl || !lengthContainer) return;
+
+  function calculatePrice() {
+    const serviceId = document.getElementById('calc-service').value;
+    const service   = PRICES_DATA.services.find(s => s.id === serviceId);
+    const resultEl  = document.getElementById('calc-result');
+    if (!service || !resultEl) return;
+
+    let priceStr = '';
+
+    if (service.type === 'fixed') {
+      priceStr = service.price.toLocaleString('ru-RU') + ' ₽';
+    } else if (service.type === 'from') {
+      priceStr = 'от ' + service.price.toLocaleString('ru-RU') + ' ₽';
+    } else if (service.type === 'master') {
+      const masterVal = document.getElementById('calc-master').value;
+      const price = service.prices[masterVal] || Object.values(service.prices)[0] || 0;
+      priceStr = price.toLocaleString('ru-RU') + ' ₽';
+    } else if (service.type === 'length') {
+      const checked   = document.querySelector('input[name="calc-length"]:checked');
+      const lengthVal = checked ? checked.value : Object.keys(PRICES_DATA.lengths)[0];
+      const price     = service.prices[lengthVal] || 0;
+      priceStr = price.toLocaleString('ru-RU') + ' ₽';
+    }
+
+    resultEl.style.transition = 'opacity 0.15s ease';
+    resultEl.style.opacity    = '0';
+
+    setTimeout(() => {
+      resultEl.innerText     = priceStr;
+      resultEl.style.opacity = '1';
+    }, 150);
+  }
+
+  function updateCalcUI() {
+    const serviceId = document.getElementById('calc-service').value;
+    const service   = PRICES_DATA.services.find(s => s.id === serviceId);
+    if (!service) return;
+
+    const masterWrapper = document.getElementById('calc-master-wrapper');
+    const lengthWrapper = document.getElementById('calc-length-wrapper');
+
+    if (service.type === 'master') {
+      masterWrapper.classList.remove('hidden');
+      lengthWrapper.classList.add('hidden');
+
+      const masterSelect = document.getElementById('calc-master');
+      Array.from(masterSelect.options).forEach(opt => {
+        opt.style.display = service.prices[opt.value] ? 'block' : 'none';
+      });
+
+      if (service.prices && !service.prices[masterSelect.value]) {
+        const firstAvailable = Array.from(masterSelect.options).find(opt => service.prices[opt.value]);
+        if (firstAvailable) masterSelect.value = firstAvailable.value;
+      }
+    } else if (service.type === 'length') {
+      masterWrapper.classList.add('hidden');
+      lengthWrapper.classList.remove('hidden');
+    } else {
+      masterWrapper.classList.add('hidden');
+      lengthWrapper.classList.add('hidden');
+    }
+
+    calculatePrice();
+  }
 
   serviceSelect.innerHTML = PRICES_DATA.services.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-  masterSelect.innerHTML  = Object.entries(PRICES_DATA.masters).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+  masterSelectEl.innerHTML  = Object.entries(PRICES_DATA.masters).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
 
   lengthContainer.innerHTML = Object.entries(PRICES_DATA.lengths).map(([k, v], i) => `
     <label class="flex-1 text-center py-4 border border-white/5 cursor-pointer hover:bg-white/[0.02] rounded-custom has-[:checked]:border-brand/40 has-[:checked]:text-brand text-xs transition-all uppercase tracking-widest opacity-60 has-[:checked]:opacity-100">
-      <input class="hidden" name="calc-length" onchange="calculatePrice()" type="radio" value="${k}" ${i === 0 ? 'checked' : ''} />
+      <input class="hidden" name="calc-length" type="radio" value="${k}" ${i === 0 ? 'checked' : ''} />
       ${v}
     </label>
   `).join('');
 
+  serviceSelect.addEventListener('change', updateCalcUI);
+  masterSelectEl.addEventListener('change', calculatePrice);
+  lengthContainer.addEventListener('change', (e) => {
+    if (e.target.matches('input[name="calc-length"]')) calculatePrice();
+  });
+
   updateCalcUI();
-}
-
-function updateCalcUI() {
-  const serviceId = document.getElementById('calc-service').value;
-  const service   = PRICES_DATA.services.find(s => s.id === serviceId);
-  if (!service) return;
-
-  const masterWrapper = document.getElementById('calc-master-wrapper');
-  const lengthWrapper = document.getElementById('calc-length-wrapper');
-
-  if (service.type === 'master') {
-    masterWrapper.classList.remove('hidden');
-    lengthWrapper.classList.add('hidden');
-
-    const masterSelect = document.getElementById('calc-master');
-    Array.from(masterSelect.options).forEach(opt => {
-      opt.style.display = service.prices[opt.value] ? 'block' : 'none';
-    });
-
-    if (service.prices && !service.prices[masterSelect.value]) {
-      const firstAvailable = Array.from(masterSelect.options).find(opt => service.prices[opt.value]);
-      if (firstAvailable) masterSelect.value = firstAvailable.value;
-    }
-  } else if (service.type === 'length') {
-    masterWrapper.classList.add('hidden');
-    lengthWrapper.classList.remove('hidden');
-  } else {
-    masterWrapper.classList.add('hidden');
-    lengthWrapper.classList.add('hidden');
-  }
-
-  calculatePrice();
-}
-
-function calculatePrice() {
-  const serviceId = document.getElementById('calc-service').value;
-  const service   = PRICES_DATA.services.find(s => s.id === serviceId);
-  const resultEl  = document.getElementById('calc-result');
-  if (!service || !resultEl) return;
-
-  let priceStr = '';
-
-  if (service.type === 'fixed') {
-    priceStr = service.price.toLocaleString('ru-RU') + ' ₽';
-  } else if (service.type === 'from') {
-    priceStr = 'от ' + service.price.toLocaleString('ru-RU') + ' ₽';
-  } else if (service.type === 'master') {
-    const masterVal = document.getElementById('calc-master').value;
-    const price = service.prices[masterVal] || Object.values(service.prices)[0] || 0;
-    priceStr = price.toLocaleString('ru-RU') + ' ₽';
-  } else if (service.type === 'length') {
-    const checked   = document.querySelector('input[name="calc-length"]:checked');
-    const lengthVal = checked ? checked.value : Object.keys(PRICES_DATA.lengths)[0];
-    const price     = service.prices[lengthVal] || 0;
-    priceStr = price.toLocaleString('ru-RU') + ' ₽';
-  }
-
-  resultEl.style.transition = 'opacity 0.15s ease';
-  resultEl.style.opacity    = '0';
-
-  setTimeout(() => {
-    resultEl.innerText     = priceStr;
-    resultEl.style.opacity = '1';
-  }, 150);
 }
 
 // ============================================================
 // Price List Tabs
 // ============================================================
 function initPriceListTabs() {
-  const tabs   = document.querySelectorAll('.price-list__tab');
-  const panels = document.querySelectorAll('.price-list__panel');
+  const tabs = [...document.querySelectorAll('.price-list__tab')];
+  if (!tabs.length) return;
 
-  if (!tabs.length || !panels.length) return;
+  // Only the active tab is in the natural tab order; others use arrow keys
+  tabs.forEach(t => {
+    if (!t.classList.contains('price-list__tab--active')) {
+      t.setAttribute('tabindex', '-1');
+    }
+  });
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetPanel = tab.dataset.tab;
-      const currentPanel = document.querySelector('.price-list__panel--active');
-      const nextPanel    = document.querySelector(`[data-panel="${targetPanel}"]`);
+  const switchTab = (tab, { animate = true, updateHash = true } = {}) => {
+    const targetId  = tab.dataset.tab;
+    const nextPanel = document.querySelector(`[data-panel="${targetId}"]`);
+    const curPanel  = document.querySelector('.price-list__panel--active');
 
-      if (!nextPanel || nextPanel === currentPanel) return;
+    if (!nextPanel || nextPanel === curPanel) return;
 
-      // Update tab pills immediately (CSS transition handles the smooth look)
-      tabs.forEach(t => {
-        t.classList.remove('price-list__tab--active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('price-list__tab--active');
-      tab.setAttribute('aria-selected', 'true');
+    // Update tab roving tabindex + aria state
+    tabs.forEach(t => {
+      t.classList.remove('price-list__tab--active');
+      t.setAttribute('aria-selected', 'false');
+      t.setAttribute('tabindex', '-1');
+    });
+    tab.classList.add('price-list__tab--active');
+    tab.setAttribute('aria-selected', 'true');
+    tab.setAttribute('tabindex', '0');
+
+    if (animate) {
       tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-
-      // Fade out old panel, then let it clean up after animation
-      if (currentPanel) {
-        currentPanel.classList.remove('price-list__panel--active');
-        currentPanel.classList.add('price-list__panel--leaving');
-        currentPanel.addEventListener('animationend', () => {
-          currentPanel.classList.remove('price-list__panel--leaving');
+      if (curPanel) {
+        curPanel.classList.remove('price-list__panel--active');
+        curPanel.classList.add('price-list__panel--leaving');
+        curPanel.addEventListener('animationend', () => {
+          curPanel.classList.remove('price-list__panel--leaving');
         }, { once: true });
       }
+    } else {
+      if (curPanel) curPanel.classList.remove('price-list__panel--active');
+    }
 
-      // Fade in new panel (overlaps briefly for cinematic cross-fade)
-      nextPanel.classList.add('price-list__panel--active');
+    nextPanel.classList.add('price-list__panel--active');
+
+    if (updateHash) history.replaceState(null, '', `#services-${targetId}`);
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => switchTab(tab));
+
+    // Arrow key navigation (ARIA tablist pattern)
+    tab.addEventListener('keydown', (e) => {
+      let target = -1;
+      if (e.key === 'ArrowRight') target = (index + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') target = (index - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') target = 0;
+      else if (e.key === 'End')  target = tabs.length - 1;
+
+      if (target !== -1) {
+        e.preventDefault();
+        tabs[target].focus();
+        switchTab(tabs[target]);
+      }
     });
+  });
+
+  // Restore tab from URL hash on page load (e.g. #services-coloring)
+  const hash = location.hash;
+  if (hash.startsWith('#services-')) {
+    const tabName   = hash.slice('#services-'.length);
+    const targetTab = tabs.find(t => t.dataset.tab === tabName);
+    if (targetTab) switchTab(targetTab, { animate: false, updateHash: false });
+  }
+}
+
+// ============================================================
+// Service booking — "Записаться" on each price row (delegated click scrolls to #new-guests)
+// ============================================================
+function initServiceBookBtns() {
+  const panelToService = {
+    brows:      'Комплекс',
+    coloring:   'Окрашивание',
+    makeup:     'Комплекс',
+    styling:    'Комплекс',
+    haircuts:   'Стрижка',
+    care:       'Уход',
+    wedding:    'Комплекс',
+    lamination: 'Комплекс'
+  };
+
+  document.querySelectorAll('.price-list__panel[data-panel]').forEach(panel => {
+    const serviceValue = panelToService[panel.dataset.panel] || '';
+    panel.querySelectorAll('.price-list__item').forEach(item => {
+      const serviceName = item.querySelector('.price-list__name')?.textContent?.trim() || '';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'price-list__book-btn';
+      btn.innerHTML = 'Записаться <span aria-hidden="true">&#8594;</span>';
+      btn.dataset.bookService = serviceValue;
+      btn.setAttribute('aria-label', `Записаться на услугу: ${serviceName}`);
+      item.appendChild(btn);
+    });
+  });
+
+  // Event delegation for dynamically added book buttons on price list items
+  const content = document.querySelector('.price-list__content');
+  if (!content) return;
+  content.addEventListener('click', (e) => {
+    const btn = e.target.closest('.price-list__book-btn');
+    if (!btn) return;
+    e.stopPropagation();
+
+    const serviceValue = btn.dataset.bookService;
+    const select = document.getElementById('newguest-service');
+    if (select && serviceValue) select.value = serviceValue;
+
+    const target = document.getElementById('new-guests');
+    if (!target) return;
+    if (lenis) lenis.scrollTo(target, { offset: 0 });
+    else target.scrollIntoView({ behavior: 'smooth' });
   });
 }
 
@@ -561,11 +706,10 @@ function initVideoInteraction() {
   const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
   if (isTouchDevice()) {
-    // On mobile/touch: mute and autoplay
+    // On mobile/touch: mute and autoplay (playsinline is set on the element in HTML)
     video.muted    = true;
     video.autoplay = true;
     video.loop     = true;
-    video.setAttribute('playsinline', '');
     video.play().catch(() => {});
   } else {
     // Desktop: play on hover
@@ -633,6 +777,11 @@ function initNewGuestForm() {
 
     const name     = document.getElementById('newguest-name').value.trim();
     const phone    = document.getElementById('newguest-phone').value.trim();
+    const phoneDigits = normalizeRussianMobile(phone);
+    if (!phoneDigits) {
+      announceFormStatus('Укажите корректный мобильный номер.');
+      return;
+    }
     const service  = document.getElementById('newguest-service').value;
     const timePart = document.getElementById('newguest-time-part').value;
     const day      = document.getElementById('newguest-day').value;
@@ -647,7 +796,7 @@ function initNewGuestForm() {
       const payload = new URLSearchParams({
         source: 'newguest',
         name,
-        phone,
+        phone: formatRussianMobileE164(phoneDigits),
         service,
         time_part: timePart,
         day
@@ -681,6 +830,22 @@ function initNewGuestForm() {
   });
 }
 
+// Intrinsic widths of full-size master PNGs (for srcset `w` descriptors)
+const MASTER_PNG_INTRINSIC_W = {
+  1: 987,
+  2: 1186,
+  3: 1188
+};
+
+/** @param {string} pngPath e.g. assets/images/master-1.png */
+function masterPortfolioSrcset(pngPath) {
+  const m = pngPath.match(/master-(\d+)\.png$/);
+  const id = m ? Number(m[1]) : 1;
+  const w = MASTER_PNG_INTRINSIC_W[id] || 1024;
+  const base = pngPath.replace(/\.png$/i, '');
+  return `${base}-w384.webp 384w, ${base}-w768.webp 768w, ${pngPath} ${w}w`;
+}
+
 // ============================================================
 // Master Gallery Carousel
 // ============================================================
@@ -703,25 +868,25 @@ function initMasterGallery() {
     alexander: {
       name: 'Наташа Яковлева',
       images: [
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221237.png',
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221257.png',
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221305.png'
+        'assets/images/master-1.png',
+        'assets/images/master-2.png',
+        'assets/images/master-3.png'
       ]
     },
     elena: {
       name: 'Саша Эхова',
       images: [
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221257.png',
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221237.png',
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221305.png'
+        'assets/images/master-2.png',
+        'assets/images/master-1.png',
+        'assets/images/master-3.png'
       ]
     },
     mark: {
       name: 'Алина Лопухова',
       images: [
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221305.png',
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221237.png',
-        '../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221257.png'
+        'assets/images/master-3.png',
+        'assets/images/master-1.png',
+        'assets/images/master-2.png'
       ]
     }
   };
@@ -739,14 +904,22 @@ function initMasterGallery() {
     currentSlide  = 0;
     galleryMasterName.textContent = master.name;
 
-    galleryTrack.innerHTML = master.images.map(img => `
+    galleryTrack.innerHTML = master.images.map((img, idx) => `
       <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3">
-        <img src="${img}" alt="Работа ${master.name}" class="w-full h-[400px] object-cover rounded-custom" />
+        <img src="${img}" srcset="${masterPortfolioSrcset(img)}" sizes="(max-width: 1023px) 90vw, 30vw" width="768" height="1024" alt="Работа ${master.name}" loading="${idx === 0 ? 'eager' : 'lazy'}" decoding="async" class="w-full h-[400px] object-cover rounded-custom" />
       </div>
     `).join('');
 
     gallery.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      updateGalleryPosition();
+      try {
+        closeGalleryBtn.focus({ preventScroll: true });
+      } catch {
+        /* ignore */
+      }
+    });
   };
 
   const closeGallery = () => {
@@ -769,9 +942,20 @@ function initMasterGallery() {
   };
 
   const updateGalleryPosition = () => {
-    const slideWidth = galleryTrack.firstElementChild.offsetWidth;
-    galleryTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+    const first = galleryTrack.firstElementChild;
+    if (!first) return;
+    const slideWidth = first.offsetWidth;
+    const cs = getComputedStyle(galleryTrack);
+    const gap = parseFloat(cs.gap || cs.columnGap || cs.rowGap) || 16;
+    galleryTrack.style.transform = `translateX(-${currentSlide * (slideWidth + gap)}px)`;
   };
+
+  let galleryResizeTimer;
+  window.addEventListener('resize', () => {
+    if (gallery.classList.contains('hidden')) return;
+    clearTimeout(galleryResizeTimer);
+    galleryResizeTimer = setTimeout(updateGalleryPosition, 120);
+  });
 
   masterCards.forEach(card => {
     card.addEventListener('click', () => {
@@ -885,6 +1069,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMiniBookingForm();
   initQuiz();
   initPriceListTabs();
+  initServiceBookBtns();
   initCalculator();
   initCalcContactForm();
   initVideoInteraction();
@@ -896,22 +1081,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Lenis smooth scrolling
-  const lenis = new Lenis({
+  // Lenis smooth scrolling (assigned to module-level var so other functions can use it)
+  // Lenis v1.0.x (vendor/lenis.min.js): use orientation / gestureOrientation / smoothWheel — not direction / smooth.
+  lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    smoothTouch: false,
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
     touchMultiplier: 2,
   });
 
+  let lenisRafId = 0;
   function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
+    if (!document.hidden) {
+      lenis.raf(time);
+    }
+    if (document.hidden) {
+      lenisRafId = 0;
+      return;
+    }
+    lenisRafId = requestAnimationFrame(raf);
   }
-  requestAnimationFrame(raf);
+  lenisRafId = requestAnimationFrame(raf);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(lenisRafId);
+      lenisRafId = 0;
+    } else if (!lenisRafId) {
+      lenisRafId = requestAnimationFrame(raf);
+    }
+  });
 
   // Reveal on scroll
   const observerOptions = {
@@ -931,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Active nav tracking (stable: pick section with highest intersection ratio)
   const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section[id]');
+  const sections = document.querySelectorAll('section[id], footer[id]');
 
   if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
     const visibleSections = new Map();

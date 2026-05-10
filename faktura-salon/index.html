@@ -6,34 +6,17 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>ФАКТУРА | Студия красоты Санкт-Петербург</title>
-  <!-- Google Fonts: Inter -->
+  <meta name="description" content="ФАКТУРА — премиальная студия красоты в Санкт-Петербурге. Стрижки, окрашивание, брови. Топ-стилисты с опытом 7+ лет." />
+  <meta property="og:title" content="ФАКТУРА | Студия красоты Санкт-Петербург" />
+  <meta property="og:description" content="Персональный образ за 90 минут. Записаться онлайн." />
+  <meta property="og:image" content="https://faktura.ru/faktura-salon/assets/images/hero-bg.webp" />
+  <link rel="canonical" href="https://faktura.ru/" />
+  <link rel="preload" as="image" href="assets/images/hero-bg.webp" />
+  <!-- Google Fonts: Inter (display=swap in URL avoids FOIT) -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&amp;display=swap" rel="stylesheet" />
-  <!-- Tailwind CSS v3 -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: '#fdfcf0', // Soft warm light/champagne
-            graphite: '#1a1a1a', // Deep graphite gray
-            matte: '#121212', // Matte black
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          borderRadius: {
-            'custom': '2px', // More architectural, sharper but slightly rounded
-          },
-          boxShadow: {
-            'soft': '0 10px 40px -10px rgba(0,0,0,0.5)',
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="dist/tailwind.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -41,47 +24,62 @@
   <a class="skip-link" href="#main-content">Перейти к содержимому</a>
   <div id="form-status-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
   <!-- BEGIN: Navigation -->
-  <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center glass-nav border-b border-white/5">
-    <div class="text-xl font-black tracking-tighter">ФАКТУРА</div>
+  <header class="site-header fixed top-0 w-full z-[120]" aria-label="Шапка сайта">
 
-    <!-- Desktop menu -->
-    <div class="hidden md:flex space-x-12 text-[10px] uppercase tracking-[0.3em] font-medium opacity-80">
-      <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#about">О нас</a>
-      <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#services">Услуги</a>
-      <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#masters">Мастера</a>
-      <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#quiz">Квиз</a>
-      <a class="nav-link hover:text-brand hover:opacity-100 transition-all" href="#contacts">Контакты</a>
+    <!-- Micro info strip -->
+    <div class="site-header__strip hidden sm:flex">
+      <span>наб. Карповки, 28 · Санкт-Петербург</span>
+      <span class="site-header__strip-dot" aria-hidden="true">·</span>
+      <span>Пн–Вс 10:00–21:00</span>
     </div>
 
-    <!-- Desktop phone -->
-    <a href="tel:+78123330000" class="hidden md:inline-flex items-center gap-2 text-[11px] tracking-wider text-white/50 hover:text-brand transition-colors font-medium">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.67 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.57 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.88a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.44 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      +7 (812) 333-00-00
-    </a>
+    <div class="site-header__inner">
+      <!-- Logo -->
+      <a href="#" class="site-header__brand" aria-label="ФАКТУРА — на главную">
+        <span class="site-header__brand-name">ФАКТУРА</span>
+        <span class="site-header__brand-badge">Hair studio</span>
+      </a>
 
-    <!-- Desktop CTA -->
-    <a class="hidden md:inline-flex items-center justify-center px-8 py-3 bg-brand text-black font-black text-[10px] uppercase tracking-[0.3em] rounded-custom hover:shadow-[0_0_30px_rgba(253,252,240,0.2)] hover:-translate-y-0.5 transition-all"
-      href="#new-guests">
-      <span>Записаться онлайн</span>
-      <svg class="ml-2" width="12" height="12" viewBox="0 0 24 24" fill="none">
-        <path d="M5 12h14M12 5l7 7l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </a>
+      <!-- Desktop menu -->
+      <nav class="site-header__nav hidden lg:flex" aria-label="Основное меню">
+        <a class="nav-link" href="#about">О нас</a>
+        <a class="nav-link" href="#services">Услуги</a>
+        <a class="nav-link" href="#masters">Мастера</a>
+        <a class="nav-link" href="#quiz">Квиз</a>
+        <a class="nav-link" href="#interior">Интерьер</a>
+      </nav>
 
-    <!-- Mobile burger button -->
-    <button
-      id="burger-btn"
-      class="burger-btn md:hidden"
-      aria-label="Открыть меню"
-      title="Открыть меню"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-    >
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-    </button>
-  </nav>
+      <div class="site-header__actions">
+        <!-- Desktop phone -->
+        <a href="tel:+78123330000" class="site-header__phone hidden xl:inline-flex">
+          +7 (812) 333-00-00
+        </a>
+
+        <span class="site-header__divider hidden xl:block" aria-hidden="true"></span>
+
+        <!-- Desktop CTA -->
+        <a class="site-header__cta hidden lg:inline-flex" href="#new-guests">
+          Записаться
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <!-- Mobile burger button -->
+        <button
+          id="burger-btn"
+          class="burger-btn lg:hidden"
+          aria-label="Открыть меню"
+          title="Открыть меню"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
   <!-- Mobile fullscreen menu overlay -->
   <div
@@ -92,13 +90,18 @@
     aria-label="Навигация"
   >
     <div class="mobile-menu__inner">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__eyebrow">ФАКТУРА · Карповка</span>
+        <a href="tel:+78123330000" class="mobile-menu__phone">+7 (812) 333-00-00</a>
+      </div>
+
       <!-- Nav links -->
       <nav class="mobile-menu__nav" aria-label="Основное меню">
         <a class="mobile-menu__link nav-link" href="#about">О нас</a>
         <a class="mobile-menu__link nav-link" href="#services">Услуги</a>
         <a class="mobile-menu__link nav-link" href="#masters">Мастера</a>
         <a class="mobile-menu__link nav-link" href="#quiz">Квиз</a>
-        <a class="mobile-menu__link nav-link" href="#contacts">Контакты</a>
+        <a class="mobile-menu__link nav-link" href="#interior">Интерьер</a>
       </nav>
 
       <!-- CTA -->
@@ -116,12 +119,14 @@
   <main id="main-content" tabindex="-1">
   <!-- BEGIN: HeroSection -->
   <section class="relative min-h-screen min-h-[100dvh] flex items-center justify-center overflow-hidden bg-matte">
-    <div class="absolute inset-0 z-0 parallax-bg opacity-50 mix-blend-luminosity overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-50 mix-blend-luminosity overflow-hidden">
       <img
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO5GHWszfatYgaIdnp81XvQFUNzD8YdCaB73VV7ZobC78rLBk0lgL98jggV_dJ94X_6n8LHU3KyMbItZ5t0HlGlmXkQGUDZav-yA4eAc7F0JItAJSIHcCqowx321Ktjgk9xG1AVxLhorRAggkJq4GzqJtCsVkBTJu2ElEsKQ4hHgeckXB6HqIsohxQCGwevmOT4NDfuMdg4UD8x5Oz5n0GfF91sVH1INOJ1WO5kvIZj7uvNF7IAHh1So83h8xS5pAdYXpECQfeZJ4"
+        src="assets/images/hero-bg.webp"
         alt=""
-        width="1920"
-        height="1280"
+        width="512"
+        height="512"
+        sizes="100vw"
+        srcset="assets/images/hero-bg.webp 512w"
         loading="eager"
         decoding="async"
         class="w-full h-full object-cover" />
@@ -159,7 +164,7 @@
 
   <!-- BEGIN: TrustBar -->
   <div class="bg-graphite border-y border-white/5 py-5 px-8 overflow-x-auto">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center md:justify-between gap-6 text-[10px] uppercase tracking-[0.25em] text-white/50 font-bold whitespace-nowrap">
+    <div class="layout-shell max-w-7xl mx-auto flex flex-wrap items-center justify-center md:justify-between gap-6 text-[10px] uppercase tracking-[0.25em] text-white/50 font-bold whitespace-nowrap">
       <a href="https://yandex.ru/maps/org/faktura/221109704279/reviews/" target="_blank" rel="noopener noreferrer"
          class="flex items-center gap-2 hover:text-brand transition-colors">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-brand/70"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -190,8 +195,8 @@
   <!-- END: TrustBar -->
 
   <!-- BEGIN: AboutSection -->
-  <section class="py-40 px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-24 relative z-10" id="about">
-    <div class="md:w-1/2" data-purpose="philosophy-text">
+  <section class="layout-shell py-40 px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-24 relative z-10" id="about">
+    <div class="md:w-1/2">
       <span class="text-brand/50 uppercase tracking-[0.4em] text-[10px] mb-8 block font-semibold">— Философия</span>
       <h2 class="text-4xl md:text-5xl font-bold mb-10 leading-[1.1] tracking-tight text-brand reveal-header">Ваш стиль
         как произведение искусства.</h2>
@@ -218,9 +223,11 @@
     <div class="md:w-1/2 relative">
 
       <video id="philosophy-video" muted loop playsinline
-        poster="../photos_inside/XXXL.webp"
-        class="relative w-full h-[650px] object-cover grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-1000 rounded-custom shadow-soft">
-        <source src="../photos_inside/AQPYj2u7J_JmH5_W8xjeeeJ9NerGheMezryGy5fLFM2L3owj2GkXi4P9uwTJ0WH.mp4" type="video/mp4">
+        width="1920"
+        height="2400"
+        poster="assets/images/video-poster.webp"
+        class="relative w-full aspect-[4/5] md:h-[650px] md:aspect-auto object-cover grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-1000 rounded-custom shadow-soft">
+        <source src="assets/video/philosophy.mp4?v=20260510" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -241,11 +248,13 @@
         <div class="absolute top-0 left-0 w-full h-1 bg-brand/20"></div>
         <div class="grid md:grid-cols-2 gap-6">
           <div>
+            <label class="visually-hidden" for="mini-name">Ваше имя</label>
             <input type="text" id="mini-name" name="name" required
               class="w-full bg-transparent border-b border-white/10 focus:border-brand p-4 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
               placeholder="Ваше имя">
           </div>
           <div>
+            <label class="visually-hidden" for="mini-phone">Телефон</label>
             <input type="tel" id="mini-phone" name="phone" required
               class="w-full bg-transparent border-b border-white/10 focus:border-brand p-4 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
               placeholder="Телефон">
@@ -259,23 +268,27 @@
           </svg>
         </button>
         <p id="mini-form-feedback" class="hidden text-center text-xs font-medium tracking-[0.12em] uppercase mt-4" role="status" aria-live="polite"></p>
-        <p class="text-[9px] text-center text-white/30 uppercase tracking-widest mt-4">Администратор свяжется в течение 10-15 минут в рабочее время (10:00–22:00)</p>
+        <p class="text-[9px] text-center text-white/30 uppercase tracking-widest mt-4">Администратор свяжется в течение 10-15 минут в рабочее время (10:00–21:00)</p>
       </form>
     </div>
   </section>
   <!-- END: MiniBookingSection -->
   <!-- BEGIN: ServicesSection -->
-  <section class="price-list py-40 bg-matte/50 border-y border-white/5" id="services">
-    <div class="max-w-7xl mx-auto px-8">
+  <section class="price-list price-list--services py-28 md:py-36 lg:py-40 relative bg-matte/50 border-y border-white/5" id="services">
+    <div class="layout-shell max-w-7xl mx-auto px-5 sm:px-8 relative z-[1]">
 
-      <!-- Заголовок секции -->
-      <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-4">
-        <h2 class="text-6xl md:text-8xl font-black tracking-tighter text-white/20 reveal-header">SERVICES</h2>
-        <p class="text-brand/40 uppercase tracking-[0.4em] text-[10px] font-bold">Price List 25/26</p>
-      </div>
+      <header class="price-list__section-head mb-12 md:mb-14 lg:mb-16">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-10">
+          <div class="reveal-header price-list__section-head-main">
+            <p class="price-list__eyebrow">Услуги</p>
+            <h2 class="price-list__display-title">SERVICES</h2>
+          </div>
+          <p class="price-list__season-label"><span class="price-list__season-label-inner">Прайс · <span class="tabular-nums">25/26</span></span></p>
+        </div>
+      </header>
 
       <!-- Табы (навигация по категориям) -->
-      <div class="price-list__tabs-wrapper mb-16 reveal-item">
+      <div class="price-list__tabs-wrapper price-list__tabs-ribbon reveal-item">
         <nav class="price-list__tabs" role="tablist" aria-label="Категории услуг">
           <button class="price-list__tab price-list__tab--active" role="tab" aria-selected="true" data-tab="brows" title="Брови и ресницы">Брови и ресницы</button>
           <button class="price-list__tab" role="tab" aria-selected="false" data-tab="coloring" title="Окрашивания">Окрашивания</button>
@@ -366,7 +379,7 @@
               </div>
               <p class="price-list__desc">Консультация, индивидуальный подбор цвета, окрашивание, базовый уход и лёгкая
                 укладка. Цена зависит от категории мастера. Материалы отдельно.</p>
-              <p class="text-[9px] text-brand/60 uppercase tracking-wider mt-2">Результат: сияющий цвет до 6 недель</p>
+              <p class="price-list__meta">Результат: сияющий цвет до 6 недель</p>
             </article>
 
             <article class="price-list__item">
@@ -468,7 +481,7 @@
               </div>
               <p class="price-list__desc">Повседневные укладки на брашинг. Консультация, мытье головы и базовый уход
                 включены. Цена зависит от категории мастера.</p>
-              <p class="text-[9px] text-brand/60 uppercase tracking-wider mt-2">Результат: естественный объем на 2-3 дня</p>
+              <p class="price-list__meta">Результат: естественный объем на 2-3 дня</p>
             </article>
 
             <article class="price-list__item">
@@ -562,7 +575,7 @@
               </div>
               <p class="price-list__desc">Глубокое питание, увлажнение и восстановление. Индивидуальный коктейль средств
                 на основе диагностики.</p>
-              <p class="text-[9px] text-brand/60 uppercase tracking-wider mt-2">Результат: плотные и блестящие волосы до 4 недель</p>
+              <p class="price-list__meta">Результат: плотные и блестящие волосы до 4 недель</p>
             </article>
 
             <article class="price-list__item">
@@ -637,15 +650,14 @@
 
       </div><!-- /.price-list__content -->
 
-      <p class="text-center text-[10px] text-white/40 italic tracking-wider leading-relaxed mt-16">* Точная стоимость
-        определяется мастером после очной консультации</p>
+      <p class="price-list__disclaimer">* Точная стоимость определяется мастером после очной консультации</p>
 
     </div>
   </section>
   <!-- END: ServicesSection -->
   <!-- BEGIN: MastersSection -->
   <div class="bg-graphite relative grid-bg">
-  <section class="py-40 px-8 max-w-7xl mx-auto relative z-10" id="masters">
+  <section class="layout-shell py-40 px-8 max-w-7xl mx-auto relative z-10" id="masters">
     <div class="text-center mb-24">
       <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-4 reveal-header">MASTERS</h2>
       <div class="h-px w-12 bg-brand/30 mx-auto"></div>
@@ -657,10 +669,12 @@
           <img alt="Alex"
             width="768"
             height="1024"
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            srcset="assets/images/master-1-w384.webp 384w, assets/images/master-1-w768.webp 768w, assets/images/master-1.png 987w"
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            src="../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221237.png" />
+            src="assets/images/master-1.png" />
         </div>
         <h3 class="text-xl font-bold tracking-tight mb-2">НАТАША ЯКОВЛЕВА</h3>
         <p class="text-brand/50 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Основатель и арт-директор</p>
@@ -674,10 +688,12 @@
           <img alt="Elena"
             width="768"
             height="1024"
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            srcset="assets/images/master-2-w384.webp 384w, assets/images/master-2-w768.webp 768w, assets/images/master-2.png 1186w"
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            src="../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221257.png" />
+            src="assets/images/master-2.png" />
         </div>
         <h3 class="text-xl font-bold tracking-tight mb-2">САША ЭХОВА</h3>
         <p class="text-brand/50 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Топ-стилист</p>
@@ -691,10 +707,12 @@
           <img alt="Mark"
             width="768"
             height="1024"
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            srcset="assets/images/master-3-w384.webp 384w, assets/images/master-3-w768.webp 768w, assets/images/master-3.png 1188w"
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            src="../workers/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-04-07%20221305.png" />
+            src="assets/images/master-3.png" />
         </div>
         <h3 class="text-xl font-bold tracking-tight mb-2">АЛИНА ЛОПУХОВА</h3>
         <p class="text-brand/50 text-[9px] uppercase tracking-[0.4em] font-bold mb-3">Топ-стилист</p>
@@ -704,9 +722,9 @@
       </div>
     </div>
 
-    <!-- Master Gallery Carousel -->
-    <div id="master-gallery" class="hidden mt-16 pb-16">
-      <div class="max-w-6xl mx-auto">
+    <!-- Master Gallery Carousel (desktop lightbox; hidden on small screens via CSS) -->
+    <div id="master-gallery" class="master-gallery hidden" role="dialog" aria-modal="true" aria-label="Галерея работ мастера">
+      <div class="master-gallery__panel w-full max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-8">
           <h3 class="text-2xl font-bold tracking-tight" id="gallery-master-name">Работы мастера</h3>
           <button id="close-gallery" type="button" aria-label="Закрыть галерею" title="Закрыть галерею" class="text-white/70 hover:text-white transition-colors">
@@ -860,11 +878,13 @@
 
           <form id="quiz-lead-form" class="space-y-6 max-w-sm mx-auto">
             <div class="relative">
+              <label class="visually-hidden" for="quiz-name">Ваше имя</label>
               <input type="text" id="quiz-name" name="name" required
                 class="w-full bg-transparent border-b border-matte/20 focus:border-matte p-4 text-xs font-bold tracking-widest placeholder:text-matte/30 uppercase text-matte outline-none transition-colors"
                 placeholder="ВАШЕ ИМЯ">
             </div>
             <div class="relative">
+              <label class="visually-hidden" for="quiz-phone">Ваш телефон</label>
               <input type="tel" id="quiz-phone" name="phone" required
                 class="w-full bg-transparent border-b border-matte/20 focus:border-matte p-4 text-xs font-bold tracking-widest placeholder:text-matte/30 uppercase text-matte outline-none transition-colors"
                 placeholder="ВАШ ТЕЛЕФОН">
@@ -929,7 +949,7 @@
   </section>
   <!-- END: QuizSection -->
   <!-- BEGIN: CalculatorSection -->
-  <section class="py-40 bg-matte relative overflow-hidden grid-bg">
+  <section class="py-40 bg-matte relative overflow-hidden grid-bg" id="calculator">
     <div class="absolute inset-0 opacity-5">
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand blur-[200px] rounded-full"></div>
     </div>
@@ -954,7 +974,7 @@
               <label class="block text-[9px] uppercase tracking-[0.4em] mb-4 text-white/30 font-bold" for="calc-service">Тип услуги</label>
               <select title="Тип услуги" aria-label="Тип услуги"
                 class="salon-native-select w-full p-4 rounded-custom text-sm transition-all focus:ring-1 focus:ring-black/10"
-                id="calc-service" onchange="updateCalcUI()">
+                id="calc-service">
                 <!-- Опции генерируются в JS -->
               </select>
             </div>
@@ -962,7 +982,7 @@
               <label class="block text-[9px] uppercase tracking-[0.4em] mb-4 text-white/30 font-bold" for="calc-master">Уровень мастера</label>
               <select title="Уровень мастера" aria-label="Уровень мастера"
                 class="salon-native-select w-full p-4 rounded-custom text-sm transition-all focus:ring-1 focus:ring-black/10"
-                id="calc-master" onchange="calculatePrice()">
+                id="calc-master">
                 <!-- Опции генерируются в JS -->
               </select>
             </div>
@@ -980,9 +1000,11 @@
               определяется мастером после очной консультации</p>
             
             <form id="calc-contact-form" class="w-full space-y-4 max-w-xs">
+              <label class="visually-hidden" for="calc-name">Ваше имя</label>
               <input type="text" id="calc-name" name="name" required
                 class="w-full bg-transparent border-b border-white/10 focus:border-brand p-3 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
                 placeholder="Ваше имя">
+              <label class="visually-hidden" for="calc-phone">Телефон</label>
               <input type="tel" id="calc-phone" name="phone" required
                 class="w-full bg-transparent border-b border-white/10 focus:border-brand p-3 text-xs font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none transition-colors"
                 placeholder="Телефон">
@@ -1006,8 +1028,8 @@
     </div>
   </section>
   <!-- END: CalculatorSection -->
-  <!-- BEGIN: GallerySection -->
-  <section class="pt-0 pb-40 px-4 bg-graphite">
+  <!-- BEGIN: InteriorSection -->
+  <section class="pt-0 pb-40 px-4 bg-graphite" id="interior">
     <!-- Section Label -->
     <div class="max-w-[1600px] mx-auto px-4 mb-10 pt-16 text-center md:text-left">
       <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter text-brand/30 reveal-header">ИНТЕРЬЕР</h2>
@@ -1016,50 +1038,50 @@
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-[1600px] mx-auto md:pt-24">
-      <div class="masonry-item relative overflow-hidden h-[450px] rounded-custom bg-matte reveal-item group">
+      <div class="masonry-item relative overflow-hidden h-[240px] md:h-[450px] rounded-custom bg-matte reveal-item group">
         <img class="gallery-img w-full h-full object-cover"
-          src="../photos_inside/XXXL.webp" alt="Интерьер салона" width="1024" height="1280" loading="lazy"
+          src="assets/images/interior-1.webp" alt="Ресепшн студии ФАКТУРА — зона встречи гостей" width="960" height="1280" sizes="(max-width: 767px) 50vw, 25vw" srcset="assets/images/interior-1-w640.webp 640w, assets/images/interior-1.webp 960w" loading="lazy"
           decoding="async" />
         <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <p class="text-[10px] uppercase tracking-widest text-white/90">Зона приема</p>
+          <p class="text-[10px] uppercase tracking-widest text-white/90">Встреча гостей · ресепшн</p>
         </div>
       </div>
       <div
-        class="masonry-item relative overflow-hidden h-[650px] md:-mt-20 rounded-custom bg-matte shadow-soft reveal-item reveal-item-delay-100 group">
+        class="masonry-item relative overflow-hidden h-[320px] md:h-[650px] md:-mt-20 rounded-custom bg-matte shadow-soft reveal-item reveal-item-delay-100 group">
         <img class="gallery-img w-full h-full object-cover"
-          src="../photos_inside/XXXL (1).webp" alt="Интерьер салона" width="960" height="1280" loading="lazy"
+          src="assets/images/interior-2.webp" alt="Рабочие станции стилистов — интерьер студии ФАКТУРА" width="1024" height="1280" sizes="(max-width: 767px) 50vw, 25vw" srcset="assets/images/interior-2-w640.webp 640w, assets/images/interior-2.webp 1024w" loading="lazy"
           decoding="async" />
         <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <p class="text-[10px] uppercase tracking-widest text-white/90">Рабочие зоны мастеров</p>
+          <p class="text-[10px] uppercase tracking-widest text-white/90">Рабочие места стилистов</p>
         </div>
       </div>
-      <div class="masonry-item relative overflow-hidden h-[500px] rounded-custom bg-matte reveal-item reveal-item-delay-200 group">
+      <div class="masonry-item relative overflow-hidden h-[260px] md:h-[500px] rounded-custom bg-matte reveal-item reveal-item-delay-200 group">
         <img class="gallery-img w-full h-full object-cover"
-          src="../photos_inside/XXXL (2).webp" alt="Интерьер салона" width="1024" height="1280" loading="lazy"
+          src="assets/images/interior-3.webp" alt="Зона колористики и окрашивания в студии ФАКТУРА" width="1024" height="1280" sizes="(max-width: 767px) 50vw, 25vw" srcset="assets/images/interior-3-w640.webp 640w, assets/images/interior-3.webp 1024w" loading="lazy"
           decoding="async" />
         <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <p class="text-[10px] uppercase tracking-widest text-white/90">Зона окрашивания</p>
+          <p class="text-[10px] uppercase tracking-widest text-white/90">Колористика · окрашивание</p>
         </div>
       </div>
       <div
-        class="masonry-item relative overflow-hidden h-[600px] md:-mt-10 rounded-custom bg-matte reveal-item reveal-item-delay-300 group">
+        class="masonry-item relative overflow-hidden h-[280px] md:h-[600px] md:-mt-10 rounded-custom bg-matte reveal-item reveal-item-delay-300 group">
         <img class="gallery-img w-full h-full object-cover"
-          src="../photos_inside/XXXL (3).webp" alt="Интерьер салона" width="1024" height="1280" loading="lazy"
+          src="assets/images/interior-4.webp" alt="Лаунж для гостей студии ФАКТУРА — зона отдыха" width="1024" height="1280" sizes="(max-width: 767px) 50vw, 25vw" srcset="assets/images/interior-4-w640.webp 640w, assets/images/interior-4.webp 1024w" loading="lazy"
           decoding="async" />
         <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <p class="text-[10px] uppercase tracking-widest text-white/90">Лаунж зона</p>
+          <p class="text-[10px] uppercase tracking-widest text-white/90">Лаунж между процедурами</p>
         </div>
       </div>
     </div>
   </section>
-  <!-- END: GallerySection -->
+  <!-- END: InteriorSection -->
 
   <!-- BEGIN: ReviewsSection -->
   <section class="py-40 bg-matte relative overflow-hidden grid-bg" id="reviews">
     <div class="absolute inset-0 opacity-5">
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand blur-[200px] rounded-full"></div>
     </div>
-    <div class="max-w-7xl mx-auto px-8 relative z-10">
+    <div class="layout-shell max-w-7xl mx-auto px-8 relative z-10">
       <div class="text-center mb-20">
         <span class="text-brand/50 uppercase tracking-[0.4em] text-[10px] mb-6 block font-semibold reveal-header">— Отзывы</span>
         <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-white reveal-header">Что говорят гости</h2>
@@ -1254,7 +1276,7 @@
     <div
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-black blur-[200px] rounded-full opacity-[0.15] pointer-events-none"
       aria-hidden="true"></div>
-    <div class="max-w-7xl mx-auto px-8 relative z-10">
+    <div class="layout-shell max-w-7xl mx-auto px-8 relative z-10">
       <div class="grid md:grid-cols-2 gap-16 items-center">
         <div>
           <span class="text-black/40 uppercase tracking-[0.4em] text-[10px] mb-6 block font-semibold reveal-header">— Специальное предложение</span>
@@ -1287,11 +1309,13 @@
             <p class="text-xs text-white/65 uppercase tracking-widest">Оставьте контакты для записи</p>
           </div>
           <div>
+            <label class="visually-hidden" for="newguest-name">Имя</label>
             <input id="newguest-name" name="name" required
               class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none"
               placeholder="ИМЯ" type="text" />
           </div>
           <div>
+            <label class="visually-hidden" for="newguest-phone">Телефон</label>
             <input id="newguest-phone" name="phone" required
               class="w-full bg-transparent border-b border-white/10 border-t-0 border-x-0 focus:ring-0 focus:border-brand p-4 text-[11px] font-bold tracking-[0.2em] placeholder:text-white/30 uppercase text-white outline-none"
               placeholder="ТЕЛЕФОН" type="tel" />
@@ -1347,11 +1371,11 @@
 
   <!-- BEGIN: ContactsSection -->
   <footer class="py-24 bg-matte border-t border-white/5" id="contacts">
-    <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-16">
+    <div class="layout-shell max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-16">
       <div class="max-w-xs">
         <h2 class="text-2xl font-black mb-8 tracking-tighter reveal-header">ФАКТУРА</h2>
         <p class="text-white/30 text-[11px] uppercase tracking-widest leading-relaxed mb-10 reveal-item">Мы работаем
-          ежедневно с 10:00 до 22:00. <br />Предварительная запись обязательна.</p>
+          ежедневно с 10:00 до 21:00. <br />Предварительная запись обязательна.</p>
         <div class="flex space-x-10 text-[9px] font-bold tracking-[0.3em] reveal-item reveal-item-delay-100">
           <a href="https://www.instagram.com/factura.hair" target="_blank" rel="noopener noreferrer"
             aria-label="Instagram" class="hover:text-brand transition-colors opacity-50 hover:opacity-100">INSTAGRAM</a>
@@ -1381,7 +1405,7 @@
       </div>
     </div>
     <div
-      class="max-w-7xl mx-auto px-8 mt-24 pt-10 border-t border-white/5 text-[9px] text-white/30 uppercase tracking-[0.5em] flex flex-col md:flex-row justify-between gap-4">
+      class="layout-shell max-w-7xl mx-auto px-8 mt-24 pt-10 border-t border-white/5 text-[9px] text-white/30 uppercase tracking-[0.5em] flex flex-col md:flex-row justify-between gap-4">
       <span>© <span id="footer-year">2026</span> FAKTURA SALON. ALL RIGHTS RESERVED.</span>
       <span>SANKT-PETERSBURG / RUSSIA</span>
       <!-- Author credit -->
@@ -1402,7 +1426,7 @@
   <!-- END: FloatingCTA -->
 
   <!-- BEGIN: InteractiveScripts -->
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="vendor/lenis.min.js" integrity="sha384-Q0QJmTaiVLQTTXxcTzx8VTet6f+0c0Zj+VwG6WTkv6Xd4YxCWhAsB4iy8gAAvzEX" crossorigin="anonymous"></script>
   <script src="script.js" defer></script>
   <!-- END: InteractiveScripts -->
 </body>
