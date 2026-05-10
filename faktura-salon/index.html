@@ -20,7 +20,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-graphite text-white font-sans selection:bg-brand selection:text-black concrete-bg">
+<body class="bg-graphite text-white font-sans selection:bg-brand selection:text-black concrete-bg page-boot">
+  <div id="page-loader" class="page-loader" role="status" aria-live="polite">
+    <span class="visually-hidden">Загрузка страницы…</span>
+    <div class="page-loader__dots" aria-hidden="true">
+      <span class="page-loader__dot"></span>
+      <span class="page-loader__dot"></span>
+      <span class="page-loader__dot"></span>
+    </div>
+  </div>
   <a class="skip-link" href="#main-content">Перейти к содержимому</a>
   <div id="form-status-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
   <!-- BEGIN: Navigation -->
@@ -221,15 +229,22 @@
       <div class="h-px w-20 bg-white/10"></div>
     </div>
     <div class="md:w-1/2 relative">
-
-      <video id="philosophy-video" muted loop playsinline
+      <div class="philosophy-video-wrap relative w-full rounded-custom shadow-soft overflow-hidden" id="philosophy-video-wrap">
+        <div id="philosophy-video-splash"
+          class="philosophy-video-splash absolute inset-0 z-20 flex flex-col items-center justify-center gap-5 transition-opacity duration-700 ease-out"
+          aria-hidden="true">
+          <span class="relative z-10 text-[10px] font-black uppercase tracking-[0.4em] text-brand">Фактура</span>
+          <div class="relative z-10 h-9 w-9 rounded-full border-2 border-white/15 border-t-brand animate-spin philosophy-video-splash-spinner" aria-hidden="true"></div>
+        </div>
+      <video id="philosophy-video" muted loop
         width="1920"
         height="2400"
         poster="assets/images/video-poster.webp"
-        class="relative w-full aspect-[4/5] md:h-[650px] md:aspect-auto object-cover grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-1000 rounded-custom shadow-soft">
+        class="relative z-0 block w-full aspect-[4/5] md:h-[650px] md:aspect-auto object-cover grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-1000">
         <source src="assets/video/philosophy.mp4?v=20260510" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+      </div>
     </div>
   </section>
   <!-- END: AboutSection -->
@@ -940,7 +955,7 @@
             </a>
           </div>
 
-          <p class="text-matte/60 font-light text-xs md:text-sm max-w-sm mx-auto leading-relaxed">Оставьте контакты — администратор свяжется с вами в течение 10 минут. <br><br> <span
+          <p class="text-matte/60 font-light text-xs md:text-sm max-w-sm mx-auto leading-relaxed"><span
               class="text-[10px] text-matte/40 uppercase tracking-widest">Если сообщение не приходит, проверьте папку
               «Спам»</span></p>
         </div>

@@ -10,7 +10,9 @@
       "default",
       {
         "ignore": [
+          "forced-color-adjust",
           "forced-color-adjust: none",
+          "-webkit-forced-color-adjust",
           "-webkit-forced-color-adjust: none",
           "scrollbar-width",
           "scrollbar-width: none"

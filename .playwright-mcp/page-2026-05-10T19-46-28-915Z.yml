@@ -1,0 +1,427 @@
+- generic [active] [ref=e1]:
+  - status [ref=e2]:
+    - generic [ref=e3]: Загрузка страницы…
+  - link "Перейти к содержимому" [ref=e8] [cursor=pointer]:
+    - /url: "#main-content"
+  - status [ref=e9]
+  - banner "Шапка сайта" [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]: наб. Карповки, 28 · Санкт-Петербург
+      - generic [ref=e13]: ·
+      - generic [ref=e14]: Пн–Вс 10:00–21:00
+    - generic [ref=e15]:
+      - link "ФАКТУРА — на главную" [ref=e16] [cursor=pointer]:
+        - /url: "#"
+        - generic [ref=e17]: ФАКТУРА
+        - generic [ref=e18]: Hair studio
+      - generic [ref=e19]:
+        - link "+7 (812) 333-00-00" [ref=e20] [cursor=pointer]:
+          - /url: tel:+78123330000
+        - link "Записаться" [ref=e21] [cursor=pointer]:
+          - /url: "#new-guests"
+          - text: Записаться
+          - img [ref=e22]
+        - button "Открыть меню" [ref=e24] [cursor=pointer]
+  - main [ref=e27]:
+    - generic [ref=e31]:
+      - heading "ФОРМА. СТИЛЬ. ФАКТУРА." [level=1] [ref=e32]:
+        - text: ФОРМА. СТИЛЬ.
+        - text: ФАКТУРА.
+      - generic [ref=e33]:
+        - paragraph [ref=e34]: Персональный образ за 90 минут
+        - paragraph [ref=e35]: Топ-стилисты с опытом 7+ лет
+      - paragraph [ref=e36]: Премиальная студия в сердце Петербурга
+      - paragraph [ref=e37]: Стрижки от 3 100 ₽ · Окрашивание от 5 500 ₽ · Брови от 1 700 ₽
+      - generic [ref=e38]:
+        - link "Стать гостем" [ref=e39] [cursor=pointer]:
+          - /url: "#new-guests"
+        - link "+7 (812) 333-00-00" [ref=e40] [cursor=pointer]:
+          - /url: tel:+78123330000
+          - img [ref=e41]
+          - text: +7 (812) 333-00-00
+    - generic [ref=e44]:
+      - link "4.9 · 120+ отзывов Яндекс" [ref=e45] [cursor=pointer]:
+        - /url: https://yandex.ru/maps/org/faktura/221109704279/reviews/
+        - img [ref=e46]
+        - text: 4.9 · 120+ отзывов Яндекс
+      - generic [ref=e49]:
+        - img [ref=e50]
+        - text: Студия с 2019 года
+      - generic [ref=e53]:
+        - img [ref=e54]
+        - text: 500+ гостей
+      - generic [ref=e57]:
+        - img [ref=e58]
+        - text: SEBASTIAN Professional · L'Oréal · KEVIN.MURPHY
+      - generic [ref=e61]:
+        - img [ref=e62]
+        - text: Ответ за 10 минут
+    - generic [ref=e65]:
+      - generic [ref=e66]:
+        - generic [ref=e67]: — Философия
+        - heading "Ваш стиль как произведение искусства." [level=2] [ref=e68]
+        - paragraph [ref=e69]: Мы не просто стрижем. Мы создаем архитектуру вашего образа, подчеркивая естественную эстетику и внутреннюю свободу. Ничего лишнего. Только безупречная форма.
+        - list [ref=e70]:
+          - listitem [ref=e71]:
+            - generic [ref=e72]: •
+            - text: Работаем с SEBASTIAN Professional, KEVIN.MURPHY, L'Oréal Professionnel
+          - listitem [ref=e73]:
+            - generic [ref=e74]: •
+            - text: Средний чек 4 500 — 8 000 ₽ за комплексную услугу
+          - listitem [ref=e75]:
+            - generic [ref=e76]: •
+            - text: Каждый мастер — дипломированный специалист с международной сертификацией
+      - generic [ref=e79]:
+        - generic [ref=e81]: Фактура
+        - generic [ref=e82]: Your browser does not support the video tag.
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - heading "Быстрая запись" [level=2] [ref=e88]
+        - paragraph [ref=e89]: Оставьте контакты — администратор свяжется с вами в течение 10 минут
+      - generic [ref=e90]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]: Ваше имя
+            - textbox "Ваше имя" [ref=e95]
+          - generic [ref=e96]:
+            - generic [ref=e97]: Телефон
+            - textbox "Телефон" [ref=e98]
+        - button "Записаться" [ref=e99] [cursor=pointer]:
+          - generic [ref=e100]: Записаться
+        - paragraph [ref=e101]: Администратор свяжется в течение 10-15 минут в рабочее время (10:00–21:00)
+    - generic [ref=e103]:
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - paragraph [ref=e107]: Услуги
+          - heading "SERVICES" [level=2] [ref=e108]
+        - paragraph [ref=e109]:
+          - generic [ref=e110]:
+            - text: Прайс ·
+            - generic [ref=e111]: 25/26
+      - tablist "Категории услуг" [ref=e113]:
+        - tab "Брови и ресницы" [selected] [ref=e114] [cursor=pointer]
+        - tab "Окрашивания" [ref=e115] [cursor=pointer]
+        - tab "Макияж" [ref=e116] [cursor=pointer]
+        - tab "Стайлинг" [ref=e117] [cursor=pointer]
+        - tab "Стрижки" [ref=e118] [cursor=pointer]
+        - tab "Уходовые процедуры" [ref=e119] [cursor=pointer]
+        - tab "Свадебные образы" [ref=e120] [cursor=pointer]
+        - tab "Ламинирование" [ref=e121] [cursor=pointer]
+      - tabpanel [ref=e123]:
+        - generic [ref=e124]:
+          - article [ref=e125]:
+            - generic [ref=e126]:
+              - heading "Архитектура бровей" [level=4] [ref=e127]
+              - generic [ref=e128]: 1 700 ₽
+            - paragraph [ref=e129]: Идеальные брови – ключ к выразительному взгляду и гармоничному образу.
+            - 'button "Записаться на услугу: Архитектура бровей" [ref=e130] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e131]: →
+          - article [ref=e132]:
+            - generic [ref=e133]:
+              - heading "Окрашивание бровей" [level=4] [ref=e134]
+              - generic [ref=e135]: 1 700 ₽
+            - paragraph [ref=e136]: Стойкий и естественный результат для выразительного взгляда.
+            - 'button "Записаться на услугу: Окрашивание бровей" [ref=e137] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e138]: →
+          - article [ref=e139]:
+            - generic [ref=e140]:
+              - heading "Ламинирование бровей" [level=4] [ref=e141]
+              - generic [ref=e142]: 2 500 ₽
+            - paragraph [ref=e143]: Безупречный образ без ежедневных усилий. Подходит для любых бровей.
+            - 'button "Записаться на услугу: Ламинирование бровей" [ref=e144] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e145]: →
+          - article [ref=e146]:
+            - generic [ref=e147]:
+              - heading "Архитектура + окрашивание" [level=4] [ref=e148]
+              - generic [ref=e149]: 3 000 ₽
+            - paragraph [ref=e150]: Комплекс из 2 услуг со скидкой 15%.
+            - 'button "Записаться на услугу: Архитектура + окрашивание" [ref=e151] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e152]: →
+          - article [ref=e153]:
+            - generic [ref=e154]:
+              - heading "Архитектура + окрашивание + ламинирование" [level=4] [ref=e155]
+              - generic [ref=e156]: 4 000 ₽
+            - paragraph [ref=e157]: Комплекс из 3 услуг со скидкой 40%.
+            - 'button "Записаться на услугу: Архитектура + окрашивание + ламинирование" [ref=e158] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e159]: →
+          - article [ref=e160]:
+            - generic [ref=e161]:
+              - heading "Депиляция лица (1 зона)" [level=4] [ref=e162]
+              - generic [ref=e163]: 500 ₽
+            - 'button "Записаться на услугу: Депиляция лица (1 зона)" [ref=e164] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e165]: →
+          - article [ref=e166]:
+            - generic [ref=e167]:
+              - heading "Окрашивание ресниц" [level=4] [ref=e168]
+              - generic [ref=e169]: 1 500 ₽
+            - paragraph [ref=e170]: Выразительный взгляд без ежедневного использования туши.
+            - 'button "Записаться на услугу: Окрашивание ресниц" [ref=e171] [cursor=pointer]':
+              - text: Записаться
+              - generic [ref=e172]: →
+      - paragraph [ref=e173]: "* Точная стоимость определяется мастером после очной консультации"
+    - generic [ref=e175]:
+      - heading "MASTERS" [level=2] [ref=e177]
+      - generic [ref=e179]:
+        - generic [ref=e180] [cursor=pointer]:
+          - img "Alex" [ref=e182]
+          - heading "НАТАША ЯКОВЛЕВА" [level=3] [ref=e183]
+          - paragraph [ref=e184]: Основатель и арт-директор
+          - paragraph [ref=e186]: В профессии с 2004 года
+        - generic [ref=e187] [cursor=pointer]:
+          - img "Elena" [ref=e189]
+          - heading "САША ЭХОВА" [level=3] [ref=e190]
+          - paragraph [ref=e191]: Топ-стилист
+          - paragraph [ref=e193]: В профессии с 2012 года
+        - generic [ref=e194] [cursor=pointer]:
+          - img "Mark" [ref=e196]
+          - heading "АЛИНА ЛОПУХОВА" [level=3] [ref=e197]
+          - paragraph [ref=e198]: Топ-стилист
+          - paragraph [ref=e200]: В профессии с 2018 года
+    - generic [ref=e202]:
+      - generic [ref=e203]:
+        - heading "Подбери свой стиль" [level=2] [ref=e204]
+        - paragraph [ref=e205]: Ответьте на 3 коротких вопроса и получите персональную рекомендацию по образу и профессиональному мастеру вашего стиля.
+      - generic [ref=e206]:
+        - generic [ref=e209]: Шаг 1 из 4
+        - generic [ref=e212]:
+          - heading "Что вас больше всего беспокоит в ваших волосах / образе прямо сейчас?" [level=4] [ref=e213]
+          - generic [ref=e214]:
+            - button "Нет объема Быстро теряет форму" [ref=e215] [cursor=pointer]:
+              - generic [ref=e216]: Нет объема
+              - generic [ref=e217]: Быстро теряет форму
+            - button "Седина Нужно перекрасить" [ref=e218] [cursor=pointer]:
+              - generic [ref=e219]: Седина
+              - generic [ref=e220]: Нужно перекрасить
+            - button "Тусклый цвет Нужен блеск" [ref=e221] [cursor=pointer]:
+              - generic [ref=e222]: Тусклый цвет
+              - generic [ref=e223]: Нужен блеск
+            - button "Другое Услышать вас при встрече" [ref=e224] [cursor=pointer]:
+              - generic [ref=e225]: Другое
+              - generic [ref=e226]: Услышать вас при встрече
+    - generic [ref=e229]:
+      - heading "Калькулятор услуг" [level=2] [ref=e231]
+      - generic [ref=e234]:
+        - generic [ref=e235]:
+          - generic [ref=e236]:
+            - generic [ref=e237]: Тип услуги
+            - combobox "Тип услуги" [ref=e238]:
+              - option "Женская стрижка" [selected]
+              - option "Мужская стрижка"
+              - option "Стрижка челки"
+              - option "Укладка Легкая"
+              - option "Укладка Медиум"
+              - option "Окрашивание (1 тон)"
+              - option "Сложное окрашивание (до 25%)"
+              - option "Сложное окрашивание (до 50%)"
+              - option "Тотал блонд"
+              - option "Пилинг кожи головы"
+              - option "Ламинирование SEBASTIAN"
+              - option "Экспресс-макияж"
+              - option "Дневной макияж"
+          - generic [ref=e239]:
+            - generic [ref=e240]: Уровень мастера
+            - combobox "Уровень мастера" [ref=e241]:
+              - option "Мастер" [selected]
+              - option "Стилист"
+              - option "Эксперт"
+              - option "Топ-стилист"
+              - option "Арт-директор"
+        - generic [ref=e242]:
+          - paragraph [ref=e243]: Предварительная стоимость
+          - generic [ref=e244]: 3 600 ₽
+          - paragraph [ref=e245]: "*Точная стоимость определяется мастером после очной консультации"
+          - generic [ref=e246]:
+            - generic [ref=e247]: Ваше имя
+            - textbox "Ваше имя" [ref=e248]
+            - generic [ref=e249]: Телефон
+            - textbox "Телефон" [ref=e250]
+            - button "Зафиксировать цену" [ref=e251] [cursor=pointer]:
+              - generic [ref=e252]: Зафиксировать цену
+          - paragraph [ref=e253]: Администратор свяжется в течение 15 минут
+    - generic [ref=e254]:
+      - generic [ref=e255]:
+        - heading "ИНТЕРЬЕР" [level=2] [ref=e256]
+        - paragraph [ref=e258]: Пространство создано для погружения в атмосферу спокойствия и премиального сервиса
+      - generic [ref=e259]:
+        - generic [ref=e260]:
+          - img "Ресепшн студии ФАКТУРА — зона встречи гостей" [ref=e261]
+          - paragraph [ref=e263]: Встреча гостей · ресепшн
+        - generic [ref=e264]:
+          - img "Рабочие станции стилистов — интерьер студии ФАКТУРА" [ref=e265]
+          - paragraph [ref=e267]: Рабочие места стилистов
+        - generic [ref=e268]:
+          - img "Зона колористики и окрашивания в студии ФАКТУРА" [ref=e269]
+          - paragraph [ref=e271]: Колористика · окрашивание
+        - generic [ref=e272]:
+          - img "Лаунж для гостей студии ФАКТУРА — зона отдыха" [ref=e273]
+          - paragraph [ref=e275]: Лаунж между процедурами
+    - generic [ref=e278]:
+      - generic [ref=e279]:
+        - generic [ref=e280]: — Отзывы
+        - heading "Что говорят гости" [level=2] [ref=e281]
+      - generic [ref=e282]:
+        - generic [ref=e283]:
+          - generic [ref=e284]:
+            - generic [ref=e285]:
+              - img [ref=e286]
+              - img [ref=e288]
+              - img [ref=e290]
+              - img [ref=e292]
+              - img [ref=e294]
+            - generic [ref=e296]:
+              - img [ref=e297]
+              - text: Яндекс
+          - paragraph [ref=e299]: "\"Наташа — просто волшебник! Никогда не думала, что мои волосы могут выглядеть так — объём держится уже третий день. Впервые за годы нашла своего мастера.\""
+          - generic [ref=e300]:
+            - generic [ref=e301]:
+              - generic [ref=e303]: А
+              - generic [ref=e304]:
+                - paragraph [ref=e305]: Анна К.
+                - paragraph [ref=e306]: Стрижка + Укладка
+            - generic [ref=e307]: март 2026
+        - generic [ref=e308]:
+          - generic [ref=e309]:
+            - generic [ref=e310]:
+              - img [ref=e311]
+              - img [ref=e313]
+              - img [ref=e315]
+              - img [ref=e317]
+              - img [ref=e319]
+            - generic [ref=e321]:
+              - img [ref=e322]
+              - text: Яндекс
+          - paragraph [ref=e324]: "\"Саша сделала то, что я просила уже три года, но никто не решался. Воздушный блонд из тёмно-коричневого за один визит — без рыжины и повреждений. Это просто магия.\""
+          - generic [ref=e325]:
+            - generic [ref=e326]:
+              - generic [ref=e328]: М
+              - generic [ref=e329]:
+                - paragraph [ref=e330]: Мария В.
+                - paragraph [ref=e331]: Сложное окрашивание
+            - generic [ref=e332]: февр. 2026
+        - generic [ref=e333]:
+          - generic [ref=e334]:
+            - generic [ref=e335]:
+              - img [ref=e336]
+              - img [ref=e338]
+              - img [ref=e340]
+              - img [ref=e342]
+              - img [ref=e344]
+            - generic [ref=e346]:
+              - img [ref=e347]
+              - text: Яндекс
+          - paragraph [ref=e349]: "\"Брови у Алины — отдельный вид искусства. Пришла с «ничем», вышла с лицом. Архитектура + ламинирование в один день, результат держится больше месяца.\""
+          - generic [ref=e350]:
+            - generic [ref=e351]:
+              - generic [ref=e353]: Е
+              - generic [ref=e354]:
+                - paragraph [ref=e355]: Екатерина Л.
+                - paragraph [ref=e356]: Брови + Ламинирование
+            - generic [ref=e357]: янв. 2026
+      - link "Все отзывы на Яндекс" [ref=e359] [cursor=pointer]:
+        - /url: https://yandex.ru/maps/org/faktura/221109704279/reviews/
+        - text: Все отзывы на Яндекс
+        - img [ref=e360]
+    - generic [ref=e363]:
+      - generic [ref=e364]:
+        - generic [ref=e365]: — Частые вопросы
+        - heading "Вопросы и ответы" [level=2] [ref=e366]
+      - generic [ref=e367]:
+        - button "Нужна ли предварительная консультация?" [ref=e369] [cursor=pointer]:
+          - generic [ref=e370]: Нужна ли предварительная консультация?
+          - img [ref=e371]
+        - button "Сколько длится первое окрашивание?" [ref=e374] [cursor=pointer]:
+          - generic [ref=e375]: Сколько длится первое окрашивание?
+          - img [ref=e376]
+        - button "Есть ли скидки для новых гостей?" [ref=e379] [cursor=pointer]:
+          - generic [ref=e380]: Есть ли скидки для новых гостей?
+          - img [ref=e381]
+        - button "Можно ли перенести или отменить запись?" [ref=e384] [cursor=pointer]:
+          - generic [ref=e385]: Можно ли перенести или отменить запись?
+          - img [ref=e386]
+        - button "Какие средства используете для окрашивания?" [ref=e389] [cursor=pointer]:
+          - generic [ref=e390]: Какие средства используете для окрашивания?
+          - img [ref=e391]
+        - button "Есть ли услуги для мужского ухода?" [ref=e394] [cursor=pointer]:
+          - generic [ref=e395]: Есть ли услуги для мужского ухода?
+          - img [ref=e396]
+    - generic [ref=e400]:
+      - generic [ref=e401]:
+        - generic [ref=e402]: — Специальное предложение
+        - heading "Первое посещение —15%" [level=2] [ref=e403]:
+          - text: Первое
+          - text: посещение —15%
+        - paragraph [ref=e404]: "Специально для новых гостей: скидка 15% на любую услугу при первом визите. Познакомьтесь с нашим сервисом и мастерами на выгодных условиях."
+        - generic [ref=e405]:
+          - generic [ref=e408]: Бесплатная консультация
+          - generic [ref=e411]: Чай и кофе во время визита
+          - generic [ref=e414]: Подарочный уход для волос
+      - generic [ref=e415]:
+        - generic [ref=e417]:
+          - paragraph [ref=e418]: Забронируйте скидку
+          - paragraph [ref=e419]: Оставьте контакты для записи
+        - generic [ref=e420]:
+          - generic [ref=e421]: Имя
+          - textbox "Имя" [ref=e422]:
+            - /placeholder: ИМЯ
+        - generic [ref=e423]:
+          - generic [ref=e424]: Телефон
+          - textbox "Телефон" [ref=e425]:
+            - /placeholder: ТЕЛЕФОН
+        - combobox "Выбор услуги" [ref=e427]:
+          - option "ВЫБРАТЬ УСЛУГУ" [selected]
+          - option "Стрижка"
+          - option "Окрашивание"
+          - option "Комплекс"
+          - option "Уход"
+        - generic [ref=e428]:
+          - generic [ref=e429]: Предпочитаемое время
+          - generic [ref=e430]:
+            - combobox "Выберите время дня" [ref=e432]:
+              - option "ВРЕМЯ ДНЯ" [selected]
+              - option "Утро"
+              - option "День"
+              - option "Вечер"
+            - combobox "Выберите день недели" [ref=e434]:
+              - option "ДЕНЬ НЕДЕЛИ" [selected]
+              - option "Будни"
+              - option "Выходные"
+              - option "Любой"
+        - button "Получить скидку" [ref=e435] [cursor=pointer]:
+          - generic [ref=e436]: Получить скидку
+          - img [ref=e437]
+        - paragraph [ref=e439]: Ответ в течение 10-15 минут
+    - generic [ref=e440]:
+      - generic [ref=e441]:
+        - generic [ref=e442]:
+          - heading "ФАКТУРА" [level=2] [ref=e443]
+          - paragraph [ref=e444]:
+            - text: Мы работаем ежедневно с 10:00 до 21:00.
+            - text: Предварительная запись обязательна.
+          - generic [ref=e445]:
+            - link "Instagram" [ref=e446] [cursor=pointer]:
+              - /url: https://www.instagram.com/factura.hair
+              - text: INSTAGRAM
+            - link "VK" [ref=e447] [cursor=pointer]:
+              - /url: https://vk.com/factura.hair
+            - link "Telegram" [ref=e448] [cursor=pointer]:
+              - /url: https://t.me/factura_hair
+              - text: TG
+        - button "Показать карту — загрузка виджета Яндекс.Карт" [ref=e450] [cursor=pointer]:
+          - img [ref=e451]
+          - generic [ref=e454]: Нажмите, чтобы загрузить карту
+          - generic [ref=e455]: Виджет Яндекса загружается только по вашему действию и может использовать cookies третьих сторон.
+      - generic [ref=e456]:
+        - generic [ref=e457]: © 2026 FAKTURA SALON. ALL RIGHTS RESERVED.
+        - generic [ref=e458]: SANKT-PETERSBURG / RUSSIA
+        - link "Design & Dev by max" [ref=e459] [cursor=pointer]:
+          - /url: https://t.me/devbymax
+          - text: "@devbymax"
+  - link "Написать в Telegram" [ref=e460] [cursor=pointer]:
+    - /url: https://t.me/factura_hair
+    - img [ref=e461]

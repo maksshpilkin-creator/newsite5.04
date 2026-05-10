@@ -260,6 +260,7 @@ function initQuiz() {
   const stepCounter = document.getElementById('quiz-step-counter');
   const leadForm = document.getElementById('quiz-lead-form');
   const quizFormFeedback = document.getElementById('quiz-form-feedback');
+  const quizContainer = document.getElementById('quiz-container');
   const setQuizFeedback = (message, kind) => {
     if (!quizFormFeedback) return;
     quizFormFeedback.textContent = message;
@@ -292,6 +293,7 @@ function initQuiz() {
 
   const totalSteps = 4;
   let currentStep = 1;
+  let advanceTimerId = null;
 
   const stepQuestionKeys = { 1: 'pain', 2: 'length', 3: 'priority' };
 
@@ -311,6 +313,15 @@ function initQuiz() {
   };
 
   const updateUI = () => {
+    if (
+      currentStep === 4 &&
+      (answers.pain == null || answers.length == null || answers.priority == null)
+    ) {
+      if (answers.pain == null) currentStep = 1;
+      else if (answers.length == null) currentStep = 2;
+      else currentStep = 3;
+    }
+
     if (currentStep >= 1 && currentStep <= totalSteps) {
       progressContainer.classList.remove('hidden');
       stepCounter.textContent = `Шаг ${currentStep} из ${totalSteps}`;
@@ -357,7 +368,11 @@ function initQuiz() {
       btn.style.borderColor = '#121212';
       btn.style.backgroundColor = 'transparent';
 
-      setTimeout(() => {
+      clearTimeout(advanceTimerId);
+      if (quizContainer) quizContainer.classList.add('quiz-container--advancing');
+      advanceTimerId = setTimeout(() => {
+        advanceTimerId = null;
+        if (quizContainer) quizContainer.classList.remove('quiz-container--advancing');
         currentStep++;
         updateUI();
       }, 350);
@@ -366,6 +381,9 @@ function initQuiz() {
 
   if (btnPrev) {
     btnPrev.addEventListener('click', () => {
+      clearTimeout(advanceTimerId);
+      advanceTimerId = null;
+      if (quizContainer) quizContainer.classList.remove('quiz-container--advancing');
       if (currentStep > 1) {
         currentStep--;
         updateUI();
@@ -414,6 +432,12 @@ function initQuiz() {
       clearQuizFeedback();
 
       if (!leadForm.reportValidity()) {
+        return;
+      }
+
+      if (answers.pain == null || answers.length == null || answers.priority == null) {
+        setQuizFeedback('Пройдите все шаги квиза перед отправкой.', 'error');
+        announceFormStatus('Заполните все шаги квиза.');
         return;
       }
 
@@ -724,12 +748,38 @@ function initServiceBookBtns() {
 // ============================================================
 function initVideoInteraction() {
   const video = document.getElementById('philosophy-video');
+  const splash = document.getElementById('philosophy-video-splash');
   if (!video) return;
+
+  // Inline playback hint (esp. iOS); set in JS so HTML compat linters do not flag Firefox.
+  video.playsInline = true;
+
+  const hideSplash = () => {
+    if (!splash || splash.dataset.dismissed === '1') return;
+    splash.dataset.dismissed = '1';
+    splash.classList.add('opacity-0');
+    const done = () => {
+      splash.remove();
+    };
+    splash.addEventListener('transitionend', (ev) => {
+      if (ev.propertyName === 'opacity') done();
+    }, { once: true });
+    setTimeout(done, 900);
+  };
+
+  if (video.readyState >= 2) {
+    hideSplash();
+  } else {
+    video.addEventListener('loadeddata', hideSplash, { once: true });
+    video.addEventListener('canplay', hideSplash, { once: true });
+    video.addEventListener('error', hideSplash, { once: true });
+  }
+  setTimeout(hideSplash, 14000);
 
   const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
   if (isTouchDevice()) {
-    // On mobile/touch: mute and autoplay (playsinline is set on the element in HTML)
+    // On mobile/touch: mute and autoplay (playsInline is set above for inline playback on iOS)
     video.muted    = true;
     video.autoplay = true;
     video.loop     = true;
@@ -1099,9 +1149,46 @@ function initLazyYandexMap() {
 }
 
 // ============================================================
+// Full-screen page loader — hide after window load + min display time
+// ============================================================
+function initPageLoader() {
+  const el = document.getElementById('page-loader');
+  if (!el) return;
+
+  const minMs = 1500;
+  const start = performance.now();
+  let finished = false;
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    document.body.style.overflow = '';
+    el.setAttribute('aria-hidden', 'true');
+    document.body.classList.add('page-has-launched');
+    el.remove();
+  };
+
+  const scheduleFinish = () => {
+    const elapsed = performance.now() - start;
+    const wait = Math.max(0, minMs - elapsed);
+    window.setTimeout(finish, wait);
+  };
+
+  document.body.style.overflow = 'hidden';
+
+  if (document.readyState === 'complete') {
+    scheduleFinish();
+  } else {
+    window.addEventListener('load', scheduleFinish, { once: true });
+  }
+}
+
+// ============================================================
 // DOMContentLoaded — init all modules
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+
+  initPageLoader();
 
   initBurgerMenu();
   initLazyYandexMap();

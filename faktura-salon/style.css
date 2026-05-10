@@ -1,3 +1,8 @@
+/* Same as Tailwind bg-graphite — prevents a bright hairline above the fixed header when the canvas/root paints slightly outside the body box */
+html {
+  background-color: #1a1a1a;
+}
+
 /* Reveal Animation Styles & Custom Animations */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -14,6 +19,92 @@
 
 .animate-fade-in-delay-400 {
   animation-delay: 0.4s;
+}
+
+/* Full-screen page loader (LoaderOne-style bounce, CSS-only) */
+@keyframes page-loader-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+  /* No opacity fade-out: fading the overlay stacks semi-transparently over the fixed
+     header + backdrop-filter and reads as a bright band “growing” at the top edge. */
+  transition: none;
+}
+
+.page-loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.page-loader__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-loader__dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 212, 212, 0.4);
+  background: linear-gradient(to bottom, #a3a3a3, #d4d4d4);
+  animation: page-loader-bounce 1s ease-in-out infinite;
+  will-change: transform;
+}
+
+.page-loader__dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.page-loader__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.page-loader__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* After loader: smooth site “launch” — opacity-only fade (no transform; avoids stacking issues with fixed chrome) */
+body.page-boot .site-header {
+  transition: opacity 1.05s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+body.page-boot #main-content {
+  transition: opacity 1.12s cubic-bezier(0.22, 1, 0.36, 1) 0.07s;
+}
+
+body.page-boot .floating-tg-btn {
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1) 0.14s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+body.page-boot:not(.page-has-launched) .site-header,
+body.page-boot:not(.page-has-launched) #main-content {
+  opacity: 0;
+}
+
+body.page-boot:not(.page-has-launched) .floating-tg-btn {
+  opacity: 0;
+}
+
+body.page-boot.page-has-launched .site-header,
+body.page-boot.page-has-launched #main-content,
+body.page-boot.page-has-launched .floating-tg-btn {
+  opacity: 1;
 }
 
 .reveal-item-delay-100 {
@@ -99,6 +190,10 @@
   }
 }
 
+#quiz-container.quiz-container--advancing .quiz-answer {
+  pointer-events: none;
+}
+
 .reveal-header, .reveal-item {
   opacity: 0;
   transform: translateY(30px);
@@ -157,9 +252,10 @@
 
 /* ── Site Header ── */
 .site-header {
-  -webkit-backdrop-filter: blur(20px) saturate(120%);
-  backdrop-filter: blur(20px) saturate(120%);
-  background: rgba(18, 18, 18, 0.92);
+  /* Solid bar (no backdrop-filter): avoids a compositing hairline at the top that
+     worsens when the page-loader overlay cross-fades off on refresh. */
+  background-color: rgb(18, 18, 18);
+  border-top: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   transition: background 0.35s ease;
 }
@@ -220,7 +316,6 @@
   align-items: center;
   gap: clamp(1.5rem, 2.5vw, 2.75rem);
   overflow: visible;
-  scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 0.4rem 0;
 }
@@ -417,6 +512,13 @@ nav button:focus-visible,
   color: #121212;
 }
 
+/*
+ * Сама @media (forced-colors: active) активна только в Chromium/Firefox.
+ * Safari эту media-query не поддерживает — правило внутри в Safari никогда не сработает,
+ * поэтому отсутствие поддержки `forced-color-adjust` в Safari здесь не критично.
+ * -webkit-forced-color-adjust оставлен как страховка для старых WebKit-сборок.
+ * Подавление предупреждения настроено в .hintrc (compat-api/css → ignore).
+ */
 @media (forced-colors: active) {
   .salon-native-select,
   .salon-native-select option {
@@ -595,7 +697,6 @@ nav button:focus-visible,
   display: flex;
   gap: 0;
   overflow-x: auto;
-  scrollbar-width: none;
   -ms-overflow-style: none;
   border-bottom: none;
   padding: 0;
@@ -604,6 +705,13 @@ nav button:focus-visible,
 
 .price-list__tabs::-webkit-scrollbar {
   display: none;
+}
+
+@supports (scrollbar-width: none) {
+  .site-header__nav,
+  .price-list__tabs {
+    scrollbar-width: none;
+  }
 }
 
 .price-list__tab {
@@ -616,8 +724,8 @@ nav button:focus-visible,
   padding: 0 2.25rem 1.1rem 0;
   background: none;
   border: none;
-  border-bottom: 1px solid transparent;
-  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
   color: rgba(255, 255, 255, 0.3);
   font-size: 0.595rem;
   font-weight: 700;
@@ -626,8 +734,7 @@ nav button:focus-visible,
   cursor: pointer;
   transition:
     color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    border-bottom-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.28s ease;
+    border-bottom-color 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
@@ -653,11 +760,8 @@ nav button:focus-visible,
 
 .price-list__tab--active {
   color: #fdfcf0;
-  border-bottom-width: 2px;
   border-bottom-color: rgba(253, 252, 240, 0.95);
-  margin-bottom: -2px;
   background: none;
-  box-shadow: 0 8px 28px -12px rgba(253, 252, 240, 0.12);
 }
 
 .price-list__tab--active::before {
@@ -705,7 +809,7 @@ nav button:focus-visible,
 /* ── Single service row ── */
 .price-list__item {
   position: relative;
-  padding: 1.45rem 0;
+  padding: 1.45rem 0 1.45rem clamp(0.65rem, 1.5vw, 1.125rem);
   background: none;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.055);
@@ -780,6 +884,7 @@ nav button:focus-visible,
 /* ── Price ── */
 .price-list__price {
   order: 2;
+  margin-left: 0.35rem;
   font-size: 0.78rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -884,7 +989,7 @@ nav button:focus-visible,
   }
 
   .price-list__item {
-    padding: 1.1rem 0;
+    padding: 1.1rem 0 1.1rem clamp(0.65rem, 1.5vw, 1.125rem);
   }
 
   .price-list__name {
@@ -1441,61 +1546,21 @@ body.menu-open {
   }
 }
 
-/* ============================================
-   Price List Tabs — Scroll Fade Indicator
-   ============================================ */
-@media (max-width: 767px) {
-  .price-list__tabs-wrapper {
-    position: relative;
-  }
-
-  .price-list__tabs-wrapper::before {
-    display: block;
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    pointer-events: none;
-    z-index: 2;
-    background: linear-gradient(to right, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0) 100%);
-  }
-
-  .price-list__tabs-wrapper::after {
-    display: block;
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    pointer-events: none;
-    z-index: 2;
-    background: linear-gradient(to left, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0) 100%);
-  }
-}
-
-@media (min-width: 768px) {
-  .price-list__tabs-wrapper {
-    position: relative;
-  }
-
-  .price-list__tabs-wrapper::before {
-    display: none;
-  }
-
-  .price-list__tabs-wrapper::after {
-    display: none;
-  }
-}
-
 @media (min-width: 1024px) {
   /* Opt-in responsive gutters — add class `layout-shell` on wrappers that should use clamp padding at lg+ */
   .layout-shell {
     padding-left: clamp(2rem, 5vw, 4rem);
     padding-right: clamp(2rem, 5vw, 4rem);
   }
+}
+
+/* Philosophy video: poster-based splash until first frame loads */
+.philosophy-video-splash {
+  background-color: #121212;
+  background-image: linear-gradient(180deg, rgba(18, 18, 18, 0.42) 0%, rgba(18, 18, 18, 0.88) 100%),
+    url('assets/images/video-poster.webp');
+  background-size: cover;
+  background-position: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1521,8 +1586,29 @@ body.menu-open {
     transition: none !important;
   }
 
+  .philosophy-video-splash-spinner {
+    animation: none;
+  }
+
   .floating-tg-btn:hover,
   .floating-tg-btn:active {
     transform: none;
+  }
+
+  .page-loader__dot {
+    animation: none;
+    transform: none;
+  }
+
+  body.page-boot:not(.page-has-launched) .site-header,
+  body.page-boot:not(.page-has-launched) #main-content,
+  body.page-boot:not(.page-has-launched) .floating-tg-btn {
+    opacity: 1;
+  }
+
+  body.page-boot .site-header,
+  body.page-boot #main-content,
+  body.page-boot .floating-tg-btn {
+    transition: none;
   }
 }
